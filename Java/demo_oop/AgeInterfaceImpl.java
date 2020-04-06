@@ -1,4 +1,4 @@
-package demo;
+package demo_oop;
 
 public class AgeInterfaceImpl implements AgeInterface {
   Integer age = 0;

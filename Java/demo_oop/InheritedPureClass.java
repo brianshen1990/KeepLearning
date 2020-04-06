@@ -1,4 +1,4 @@
-package demo;
+package demo_oop;
 
 public class InheritedPureClass extends PureClass {
 

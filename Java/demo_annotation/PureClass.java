@@ -1,4 +1,4 @@
-package demo;
+package demo_annotation;
 
 public class PureClass {
   String name = "";
