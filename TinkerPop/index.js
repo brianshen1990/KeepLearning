@@ -6,8 +6,8 @@ const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
 const g = traversal().withRemote(new DriverRemoteConnection('ws://10.21.137.21:8182/gremlin'));
 
 const test = async () => {
-  await g.addV('person').property("name", "marko").next();
-  const vertex = await g.V().values('name').toList();
+  // await g.addV('person').property("name", "marko").next();
+  const vertex = await g.V().properties().toList();
   console.log(vertex);
 }
 
