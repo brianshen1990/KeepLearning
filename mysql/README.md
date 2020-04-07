@@ -1,0 +1,3 @@
+# MySQL
+
+- JSON Type Test.
