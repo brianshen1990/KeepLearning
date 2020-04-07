@@ -1,0 +1,6 @@
+uvicorn
+fastapi
+httpx
+gunicorn
+requests
+flask
