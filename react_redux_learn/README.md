@@ -1,3 +1,6 @@
-# React Redux Hook 
+# React Redux Normal with connect rewrite 
 
-Learn how to integrate Redux with latest Hook function from React 16.x.
+```
+npm i 
+npm start
+```
