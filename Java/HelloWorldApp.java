@@ -11,7 +11,8 @@ class HelloWorldApp {
     // demo_oop.demo.lets_demo();
     // demo_basics.demo.lets_demo();
     // demo_class_obj.demo.lets_demo();
-    demo_annotation.demo.lets_demo();
+    // demo_annotation.demo.lets_demo();
+    demo_interface_inheritance.demo.lets_demo();
   }
 
 
