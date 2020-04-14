@@ -48,3 +48,39 @@ const onClickNativeFetch = () => {
     console.error(error);
   });
 }
+
+const onClickWebSocket = () => {
+  const ws = new WebSocket('ws://localhost:8080');
+  if ( ws ) {
+    ws.onerror = (err) => { 
+      console.error(err) 
+    };
+    ws.onopen = () => {
+      ws.send('something');
+    };
+    ws.onmessage = (data) => {
+      console.log(data.data);
+      ws.close()
+    };
+  }
+}
+
+let evtSource = null;
+const onClickSSE = () => {
+  if ( !evtSource ) {
+    evtSource = new EventSource("./sse");
+    evtSource.onmessage = function(event) {
+      console.log( `${Date.now()} - ${JSON.stringify(event.data)}` );
+    }
+    evtSource.onerror = function(err) {
+      console.error("EventSource failed:", err);
+    };
+  }
+}
+
+const onCloseSSE = () => {
+  if ( evtSource ) {
+    evtSource.close();
+    evtSource = null;
+  }
+}

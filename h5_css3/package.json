@@ -9,7 +9,8 @@
   "dependencies": {
     "@koa/router": "^9.0.0",
     "koa": "^2.11.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "ws": "^7.2.3"
   },
   "type": "module",
   "author": "",
