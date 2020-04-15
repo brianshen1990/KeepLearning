@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title of the document</title>
+  <!-- <script src="clock.js"></script>
+  <link href="clock.css" rel="stylesheet" type="text/css"> -->
+  </link>
+  <style>
+    :root {
+      --second-init: 0deg;
+      --minutes-init: 0deg;
+      --hours-init: 0deg;
+    }
+    .clock-second {
+      animation: clock_second 60s steps(60) infinite;
+      transform-origin:center;
+    }
+    @keyframes clock_second {
+      from { transform: rotate(calc(var(--second-init) * 6deg));  }
+      to { transform: rotate(calc(360deg + var(--second-init) * 6deg)); }
+    }
+    .clock-minutes {
+      animation: clock_minutes 3600s infinite linear;
+      transform-origin:center;
+    }
+    @keyframes clock_minutes {
+      from { transform: rotate(calc(var(--minutes-init) * 6deg));  }
+      to { transform: rotate(calc(360deg + var(--minutes-init) * 6deg)); }
+    }
+    .clock-hours {
+      animation: clock_hours 43200s infinite linear;
+      transform-origin:center;
+    }
+    @keyframes clock_hours {
+      from { transform: rotate(calc(var(--hours-init) * 30deg));  }
+      to { transform: rotate(calc(360deg + var(--hours-init) * 30deg )); }
+    }
+  </style>
+  <script>
+    window.onload = () => {
+      const date = new Date();
+      console.log(date);
+
+      const secDeg = date.getSeconds();
+      const minDeg = date.getMinutes();
+      const hourDeg = date.getHours() % 12 + date.getMinutes() / 60;
+      let root = document.documentElement;
+      console.log( secDeg, minDeg, hourDeg );
+      root.style.setProperty('--second-init', secDeg);
+      root.style.setProperty('--minutes-init', minDeg);
+      root.style.setProperty('--hours-init', hourDeg);
+    }
+  </script>
+</head>
+
+<body>
+  <svg width="400" height="400">
+    <!-- background circle -->
+    <circle cx="200" cy="200" r="198" stroke="gray" stroke-width="4" fill="transparent" />
+    <!-- metrics -->
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="black"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(30, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(60, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="black" transform="rotate(90, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(120, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(150, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="black" transform="rotate(180, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(210, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(240, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="black" transform="rotate(270, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(300, 200, 200)"></line>
+    <line x1="200" y1="25" x2="200" y2="35" stroke-width="6" stroke="gray" transform="rotate(330, 200, 200)"></line>
+
+    <!-- middle point -->
+    <circle cx="200" cy="200" r="6" stroke="black" stroke-width="4" fill="transparent" />
+
+    <!-- hours -->
+    <line class="clock-hours" x1="200" y1="80" x2="200" y2="194" stroke-width="6" stroke="black"></line>
+    <!-- minutes -->
+    <line class="clock-minutes" x1="200" y1="20" x2="200" y2="194" stroke-width="6" stroke="black"></line>
+    <!-- seconds -->
+    <line class="clock-second" x1="200" y1="20" x2="200" y2="220" stroke-width="5" stroke="orange"></line>
+  </svg>
+</body>
+
+</html>
