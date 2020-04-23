@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Checkbox with Pseudo</title>
+  <style>
+    .awesome-checkbox {
+      display: inline-block;
+    }
+    .awesome-checkbox > div {
+      display: inline-block;
+      border: 1px solid royalblue;
+      width: 14px;
+      height: 14px;
+      border-radius: 20%;
+      cursor: pointer;
+    }
+    .awesome-checkbox > div.disabled {
+      border-color: gray;
+    }
+    .awesome-checkbox > div.disabled:hover {
+      cursor: not-allowed;
+    }
+    .awesome-checkbox > div.checked {
+      background-color: royalblue;
+    }
+    .awesome-checkbox > div.checked::after {
+      content: "✔";
+      color: white;
+      font-size: 12px;
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      display: inline-grid;
+      align-items: center;
+      text-align: center;
+    }
+  </style>
+  <script>
+    const toggle = (e) => {
+      e && e.preventDefault();
+      // set value 
+      const inputElm = e.target.nextElementSibling;
+      let tempValue = inputElm.getAttribute('value');
+      tempValue =  ( tempValue === '0' ? '1' : '0' )
+      inputElm.setAttribute('value', tempValue);
+      // set class
+      const className = ( tempValue === '1' ? 'checked' : '' );
+      e.target.setAttribute('class', className);
+    }
+  </script>
+</head>
+<body>
+  <div class="">
+    <input type="checkbox" > Checkbox 
+    <input type="checkbox" checked > checked 
+    <input type="checkbox" disabled> disabled 
+
+    <br /><br />
+    <div class="awesome-checkbox" > 
+      <div onclick="toggle(event)"></div>
+      <input type="hidden" value='0'>
+    </div>
+    Checkbox
+
+    <div class="awesome-checkbox" > 
+      <div class="checked" onclick="toggle(event)"></div>
+      <input type="hidden" value='0'>
+    </div>
+    checked
+
+    <div class="awesome-checkbox" > 
+      <div class="disabled" onclick="toggle()"></div>
+      <input type="hidden" value='0'>
+    </div>
+    disabled
+  </div>
+</body>
+</html>
