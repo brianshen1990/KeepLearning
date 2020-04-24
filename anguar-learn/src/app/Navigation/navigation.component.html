@@ -1,0 +1,65 @@
+<style>
+.ais-main-nav {
+  width: 220px;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  background-image: linear-gradient(168deg, #1f2733, #181f29);
+}
+.ais-main-nav  ._title {
+  margin-top: 20px;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(to right, #ffb08a, #df6d8f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 50px;
+}
+.ais-main-nav ul.nav {
+  list-style-type: none;
+  padding-inline-start: 0px;
+}
+.ais-main-nav ul.nav li.nav-item {
+  display: block;
+  height: 60px;
+}
+.ais-main-nav ul.nav li.nav-item > a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0px;
+}
+.ais-main-nav ul.nav li.nav-item > a.nav-link > div{
+  display: inline-block;
+  width: 4px;
+  height: 100%;
+  margin-right: 20px;
+}
+.ais-main-nav ul.nav li.nav-item > a.nav-link.active {
+  background-color: transparent;
+  background-image: linear-gradient(to left, rgba(224, 111, 143, 0) 59%, rgba(253, 171, 138, 0.3));
+}
+.ais-main-nav ul.nav li.nav-item > a.active > div {
+  border-radius: 2px;
+  background-image: linear-gradient(to bottom, #fdab8a, #e5798e);
+}
+</style>
+
+<!-- <span>{{ route.url && route.url[0] && route.url[0].path | async | json}}</span> -->
+<div class="ais-main-nav">
+  <div class="_title">
+    Angular Demo
+  </div>
+  <ul ngbNav [activeId]="route.url && route.url[0] && route.url[0].path | async" class="nav-pills" orientation="vertical">
+    <li [ngbNavItem]="link.url" *ngFor="let link of links">
+      <a ngbNavLink [routerLink]="link.url" >
+        <div></div>
+        <i class="fas fa-chart-line"></i>{{ link.title }}
+      </a>
+    </li>
+  </ul>
+</div>

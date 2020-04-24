@@ -1,0 +1,10 @@
+<style>
+.demo-chart {
+  height: 400px;
+}
+</style>
+
+<div class="ais-main-content">
+  <h4>最近 7 天运行了 {{ osscanCount }} 次 外部模块评审</h4>
+  <div echarts [options]="osscanOption" class="demo-chart"></div>
+</div>
