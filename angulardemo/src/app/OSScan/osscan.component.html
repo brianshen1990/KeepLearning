@@ -1,0 +1,62 @@
+<style>
+
+</style>
+
+<div class="ais-main-content">
+  <div class="search-div">
+    <form [formGroup]="radioGroupForm">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="1"> Left
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="2"> Middle
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="3"> Right
+        </label>
+      </div>
+    </form>
+    <br />
+    <table class="open-table">
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td> <div><div class="_subtitle">序号</div> {{item.scan_record_id}} </div></td>
+          <td> <div><div class="_subtitle">更新时间</div> {{item.updated_time}}</div></td>
+          <td> <div><div class="_subtitle">结束时间</div> {{item.end_time === 'None' ? '--' : item.end_time }}</div></td>
+          <td> <div><div class="_subtitle">状态</div>
+            <span *ngIf="item.status === '成功'">
+              <fa-icon style="color:green" [icon]="faCheckCircle"></fa-icon>
+              &nbsp;成功&nbsp;</span>
+            <span *ngIf="item.status === '失败' && item.reason === '没有可以操作的jira'">
+              <fa-icon style="color:green" [icon]="faCheckCircle"></fa-icon>
+              &nbsp;成功 没有 JIRA&nbsp;</span>
+            <span *ngIf="item.flag_bit === 2 || item.flag_bit === 0">
+              <fa-icon style="color:red" [icon]="faTimesCircle"></fa-icon>
+              &nbsp;正在运行&nbsp;</span>
+            <span *ngIf=" !(( item.flag_bit === 2 || item.flag_bit === 0 ) || item.status === '成功' || ( item.status === '失败' && item.reason === '没有可以操作的jira' )) ">
+              <fa-icon style="color:red" [icon]="faTimesCircle"></fa-icon>
+                &nbsp;失败&nbsp;</span>
+          </div></td>
+          <td> <div className="_badge_container"><div className="_subtitle">结果</div>
+            <span *ngIf="item.pass_count" class="badge badge-success">通过( {{item.pass_count}} )</span>
+            <span *ngIf="item.reject_count" class="badge badge-danger">拒绝( {{item.reject_count}} )</span>
+            <span *ngIf="item.repulse_count" class="badge badge-warning">人工( {{item.repulse_count}} )</span>
+            <span *ngIf="item.pending_count" class="badge badge-primary">待定( {{item.pending_count}} )</span>
+          </div> </td>
+          <td><div class="_subtitle">操作</div>
+            <a *ngIf="item.status === '成功'" href="#" (click)="openModal($event, item.scan_record_id)" ><fa-icon [icon]="faListAlt"></fa-icon></a>
+          </td>
+        </tr>
+      </tbody>
+      <ngb-pagination
+      [(page)]="pageNumber"
+      [pageSize]="pageSize"
+      [collectionSize]="total"
+      (pageChange)="pageChange($event)"
+      ></ngb-pagination>
+    </table>
+
+
+  </div>
+</div>
