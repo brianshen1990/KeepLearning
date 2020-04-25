@@ -5,15 +5,19 @@
 <div class="ais-main-content">
   <div class="search-div">
     <form [formGroup]="radioGroupForm">
-      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" formControlName="model">
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" 
+        formControlName="model" (change)="timeChange(radioGroupForm.value)">
         <label ngbButtonLabel class="btn-primary">
-          <input ngbButton type="radio" value="1"> Left
+          <input ngbButton type="radio" value="1" >全部
         </label>
         <label ngbButtonLabel class="btn-primary">
-          <input ngbButton type="radio" value="2"> Middle
+          <input ngbButton type="radio" value="2">今天
         </label>
         <label ngbButtonLabel class="btn-primary">
-          <input ngbButton type="radio" value="3"> Right
+          <input ngbButton type="radio" value="3">近三天
+        </label>
+        <label ngbButtonLabel class="btn-primary">
+          <input ngbButton type="radio" value="4">近一周
         </label>
       </div>
     </form>
@@ -40,9 +44,13 @@
           </div></td>
           <td> <div className="_badge_container"><div className="_subtitle">结果</div>
             <span *ngIf="item.pass_count" class="badge badge-success">通过( {{item.pass_count}} )</span>
+            <span *ngIf="item.pass_count">&nbsp;</span>
             <span *ngIf="item.reject_count" class="badge badge-danger">拒绝( {{item.reject_count}} )</span>
+            <span *ngIf="item.reject_count">&nbsp;</span>
             <span *ngIf="item.repulse_count" class="badge badge-warning">人工( {{item.repulse_count}} )</span>
+            <span *ngIf="item.repulse_count">&nbsp;</span>
             <span *ngIf="item.pending_count" class="badge badge-primary">待定( {{item.pending_count}} )</span>
+            <span *ngIf="item.pending_count">&nbsp;</span>
           </div> </td>
           <td><div class="_subtitle">操作</div>
             <a *ngIf="item.status === '成功'" href="#" (click)="openModal($event, item.scan_record_id)" ><fa-icon [icon]="faListAlt"></fa-icon></a>
