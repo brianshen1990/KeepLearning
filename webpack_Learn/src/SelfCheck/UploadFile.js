@@ -1,8 +1,6 @@
 import React , { useState, useEffect, Suspense} from 'react';
-const Dropzone = React.lazy( () => import('react-dropzone') );
-const axios = require('axios');
-import CommonConfig from '../Common/CommonConfig'
-import { toast } from 'react-toastify';
+// const Dropzone = React.lazy( () => import('react-dropzone') );
+import Dropzone from 'react-dropzone';
 
 function UploadFile() {
 
@@ -23,24 +21,15 @@ function UploadFile() {
     setUpload(1);
     setFileName(fileName);
 
-    axios.post(`${CommonConfig.baseUrl}/api/uploadfile`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then( (res) => {
-      console.log( res.data.filename)
-      if ( res.data.filename ) {
-        setFileName(res.data.filename);
-        setUpload(2);
-      }  else {
-        setUpload(0);
-        toast.error('处理错误！');
-      }
-    });
+    setTimeout( () => {
+      const newFile = "Success.xls"
+      setFileName(newFile);
+      setUpload(2);
+    }, 2000);
   }
 
   return <div className="dropZoneDiv">
-    { upload === 0 && <Suspense fallback={<div>Loading...</div>}>
+    { upload === 0 && 
         <Dropzone onDrop={handleUpload} 
               accept={[".xlsx", ".xls"]}
               multiple={false}>
@@ -50,18 +39,17 @@ function UploadFile() {
                 <input {...getInputProps()} />
                 <div className="dropZoneUpload dropZoneFrom"></div>
                 <p>
-                  点击上传 或者拖拽文件上传<br /> 
-                  <strong>TIP：</strong>请选择正确的EXCEL文件格式上传</p>
+                  Click or Drop Any file<br /> 
+                  <strong>TIP：</strong>only excel files are acceptable</p>
               </div>
             </section>
           )}
         </Dropzone>
-       </Suspense>
     }
     { upload === 1 && <div className="dropZone">
         <div className="dropZoneBorder">
           <div className="dropZoneUpload dropZoneProcessing"></div>
-          <p>上传处理中，请稍后……</p>
+          <p>Uploading, please wait...</p>
         </div>
       </div>
     }
@@ -71,10 +59,8 @@ function UploadFile() {
           <div className="dropZoneUpload dropZoneTo"></div>
           <div className="dropZoneUpload dropZoneReturn"></div>
           <br></br>
-          <p><strong>TIP：</strong>已成功为您启动下载。<br />
-            若下载未启动或您的浏览器不支持自动下载，您还可以<a href={ (fileName && upload===2 ) ? `${CommonConfig.baseUrl}/api/downloadfile/${fileName}` : '#' }>点此手动下载</a>， 或者<a href="#" onClick={ (e) => { e.preventDefault(); setUpload(0) } }>再次上传</a></p>
+          <p><strong>TIP：</strong>You can download now， or <a href="#" onClick={ (e) => { e.preventDefault(); setUpload(0) } }>upload again</a></p>
         </div>
-        
       </div>
     }
   </div>

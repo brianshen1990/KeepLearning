@@ -4,7 +4,7 @@ import CommonTab from '../Common/CommonTab';
 
 function SCIndex () {
   const renderArr = [{
-    name: "文件上传",
+    name: "Upload File",
     Render: UploadFile
   }];
   return CommonTab({tabs: renderArr});

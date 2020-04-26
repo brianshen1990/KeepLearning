@@ -10,26 +10,21 @@ module.exports = Object.assign( {}, copyConfig, {
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
-          name: 'react',
+        react_dropzone: {
+          test: /[\\/]node_modules[\\/](react-dropzone)[\\/]/,
+          name: 'react_dropzone',
           chunks: 'all',
         },
-        react_assist: {
-          test: /[\\/]node_modules[\\/](react-toastify|react-paginate|react-dropzone)[\\/]/,
-          name: 'react_assist',
+        react_lib: {
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+          name: 'react_lib',
           chunks: 'all',
         },
         css_bootstrap: {
           test: /[\\/]node_modules[\\/](bootstrap|reactstrap|@fortawesome\/fontawesome-free)[\\/]/,
           name: 'css_bootstrap',
           chunks: 'all',
-        },
-        tools: {
-          test: /[\\/]node_modules[\\/](axios|moment)[\\/]/,
-          name: 'tools',
-          chunks: 'all',
-        },
+        }
       }
     }
   }

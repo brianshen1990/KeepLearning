@@ -2,8 +2,7 @@ import React, { Suspense } from 'react';
 import { Nav, NavItem } from 'reactstrap';
 import { HashRouter as Router, Switch, Route, NavLink, Redirect } from "react-router-dom";
 const SCIndex = React.lazy( () => import('./SelfCheck/SCIndex') );
-
-import { ToastContainer, toast } from 'react-toastify';
+const Dashboard = React.lazy( () => import('./Dashboard/Dashboard') );
 
 function App() {
   return (
@@ -22,26 +21,36 @@ function App() {
           </div>
           <Nav vertical>
             <NavItem>
+              <NavLink to="/Dashboard" strict>
+                <div></div>
+                <i className="fas fa-sort"></i>&nbsp;Dashboard
+              </NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink to="/SelfCheck" strict>
                 <div></div>
-                <i className="fas fa-cloud-upload-alt"></i>&nbsp;上传文件
+                <i className="fas fa-cloud-upload-alt"></i>&nbsp;Upload File
               </NavLink>
             </NavItem>
           </Nav>
         </div>
         <div className="ais_main_content">
           <Switch>
+            <Route path="/Dashboard">
+              <Suspense fallback={<div>Loading...</div>}>
+                <Dashboard />
+              </Suspense>
+            </Route>
             <Route path="/SelfCheck">
               <Suspense fallback={<div>Loading...</div>}>
                 <SCIndex />
               </Suspense>
             </Route>
             <Route path="/">
-              <Redirect to="/SelfCheck" />
+              <Redirect to="/Dashboard" />
             </Route>
           </Switch>
         </div>
-        <ToastContainer />
       </div>
     </Router>
   );
