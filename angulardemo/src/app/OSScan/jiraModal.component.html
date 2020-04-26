@@ -1,0 +1,32 @@
+<style>
+
+</style>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">查看详情</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.close();onClose.emit(false);">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="open-table">
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td> <div><div className="_subtitle">序号</div> {{item.action_record_id}} </div></td>
+          <td> <div><div className="_subtitle">JIRA ID</div> {{item.jira_id}}</div></td>
+          <td> <div><div className="_subtitle">模块</div> {{item.jira_module_name}}</div></td>
+          <td> <div><div className="_subtitle">版本号</div>  {{item.jira_module_ver}}</div></td>
+          <td> <div><div className="_subtitle">更新时间</div> {{item.updated_time}}</div></td>
+        </tr>
+      </tbody>
+      <ngb-pagination
+      [(page)]="pageNumber"
+      [pageSize]="pageSize"
+      [collectionSize]="total"
+      [maxSize]="5"
+      ></ngb-pagination>
+    </table>
+  </div>
+</ng-template>
+
+

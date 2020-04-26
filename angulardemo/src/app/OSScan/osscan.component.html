@@ -4,6 +4,8 @@
 
 <div class="ais-main-content">
   <div class="search-div">
+    <app-osscan-jira-modal [scan_record_id]="scan_record_id"  [show]="show" (onClose)="closeModal()"></app-osscan-jira-modal>
+
     <form [formGroup]="radioGroupForm">
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" 
         formControlName="model" (change)="timeChange(radioGroupForm.value)">

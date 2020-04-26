@@ -20,11 +20,16 @@ export class OSScanComponent implements OnInit{
   pageNumber:number = 1;
   pageSize:number = 10;
 
+  scan_record_id:string = null;
+
   radioGroupForm: FormGroup;
+  show: boolean = false;
 
   constructor(private osScanService: OSScanService,
     private formBuilder: FormBuilder) {
-
+    // setInterval(()=>{
+    //   this.product++;
+    // }, 1000);
   }
   
   ngOnInit() {
@@ -64,7 +69,12 @@ export class OSScanComponent implements OnInit{
     });
   }
   openModal(event, scan_record_id:number) {
-     debugger;
+    debugger;
+    this.scan_record_id = `${scan_record_id}`;
+    this.show = true;
+  }
+  closeModal() {
+    this.show = false;
   }
   pageChange(pageNumber:number){
     this.pageNumber = pageNumber;
