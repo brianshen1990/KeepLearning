@@ -112,6 +112,49 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
     return obstacleGrid[n-1][m-1];
 };
 
+
+/**
+ * @param {number[][]} obstacleGrid
+ * @return {number}
+ */
+var uniquePathsWithObstaclesDP = function(obstacleGrid) {
+    let matrix = [];
+    
+    // initialize
+    for( let i = 0 ; i < obstacleGrid.length ; i++) {
+        const temp = [];
+        for (let j = 0; j < obstacleGrid[0].length ; j++ ) {
+            temp.push(0);
+        }
+        matrix.push(temp);
+    }
+    for( let i = 0; i < obstacleGrid.length; i++ ) {
+        if( obstacleGrid[i][0] === 1 ) {
+            break;
+        }
+        matrix[i][0] = 1;
+    }
+    for( let i = 0; i < obstacleGrid[0].length; i++ ) {
+        if( obstacleGrid[0][i] === 1 ) {
+            break;
+        }
+        matrix[0][i] = 1;
+    }
+    // console.log( matrix );
+    // DP 
+    for ( let i = 1; i < obstacleGrid.length ; i++ ) {
+        for ( let j = 1; j < obstacleGrid[0].length ; j++) {
+            if ( obstacleGrid[i][j] === 1  ) {
+                matrix[i][j] = 0;
+            } else {
+                matrix[i][j] = matrix[i-1][j] + matrix[i][j-1]
+            }
+        }
+    }
+    // console.log( matrix );
+    return matrix[obstacleGrid.length-1][obstacleGrid[0].length-1];
+};
+
 console.log( uniquePathsWithObstacles( [
     [0,1]
   ] ) === 0 );

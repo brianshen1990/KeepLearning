@@ -37,7 +37,49 @@ exection -> execution (insert 'u')
  */
 var minDistance = function(word1, word2) {
     
+  const matrix = [];
+  for ( let i = 0; i <= word2.length; i++ ) {
+      const temp = [];
+      for ( let j = 0 ; j <= word1.length ; j++) {
+          temp.push(-1);
+      }
+      matrix.push(temp);
+  }
+  // initialize
+  for ( let i = 0; i<= word2.length ; i++ ) {
+      matrix[i][0] = i;
+  }
+  for ( let i = 0; i <= word1.length ; i++ ) {
+      matrix[0][i] = i;
+  }
+  // DP 
+  for ( let i = 1 ; i <= word2.length ; i++ ) {
+      for ( let j = 1 ; j <= word1.length ; j++ ) {
+          let temp = -1;
+          if ( word2[i-1] === word1[j-1] ) {
+              // same char, so replace do not need +1
+              temp = Math.min(matrix[i-1][j-1], matrix[i-1][j]+1, matrix[i][j-1]+1); 
+          } else {
+              // different char, so replace dalso need + 1
+              temp = Math.min( matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1] ) + 1;
+          }
+          matrix[i][j] = temp;
+      }
+  }
+  
+  
+  // console.log( matrix );
+  return matrix[word2.length][word1.length];
+  
 };
 
-console.log( minDistance("horse", "ros") === 3 );
-console.log( minDistance("intention", "execution") === 5 );
+/**
+"horse"
+"ros"
+"horse"
+""
+""
+"horse"
+"intention"
+"execution"
+*/
