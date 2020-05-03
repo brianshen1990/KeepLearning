@@ -45,6 +45,31 @@ var maxProfit = function(prices) {
     return gap;
 };
 
+
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfitDP = function(prices) {
+    if ( prices.length <= 0 ) {
+        return 0;
+    }
+    
+    // init
+    let seq = new Array(prices.length).fill(0);
+    
+    // go dp 
+    for ( let i = 1 ; i < prices.length; i++ ) {
+        let max = 0;
+        for ( let j = 0 ; j < i ; j++ ) {
+            max = Math.max( prices[i]-prices[j], max );
+        }
+        seq[i] = max;
+    }
+    
+    return Math.max(...seq)
+};
+
 /**
 [7,1,5,3,6,4]
 [7,6,4,3,1]
