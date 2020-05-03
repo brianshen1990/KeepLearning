@@ -1,34 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta charset="UTF-8">
   <title>Title of the document</title>
-  <script src="./simpleChart.js"></script>
-  <!-- <link href="clock.css" rel="stylesheet" type="text/css">  -->
-  </link>
-  <style>
-  </style>
-  <script>
-
-    window.onload = () => {
-      const date = new Date();
-      console.log(date);
-      const data = {
-        Jan: 10, Fed: 20, Mar: 30,
-        Apr: 76, May: 34, Jun: 98
-      }
-      simpleChart.drawBar({data: data, element: 'chart_bar', height:250, width:400});
-
-      const data_2 = {
-        Jan: 10, Fed: 20, Mar: 30,
-        Apr: 76, May: 34, Jun: 98,
-        Aug: 23, Sep: 190, Oct: 87,
-        Nov: 56, Dec: 65
-      }
-      simpleChart.drawBar({data : data_2, element: 'chart_bar_02', height:250, width:800});
-    }
-  </script>
 </head>
 
 <body>
@@ -48,14 +22,6 @@
     <rect x="235" y="200" width="30" height="40" ></rect>
     <rect x="285" y="153" width="30" height="87" ></rect>
   </svg>
-  <br />
-  <svg id="chart_bar" xmlns="http://www.w3.org/2000/svg">
-  </svg>
-  <br />
-  <svg id="chart_bar_02" xmlns="http://www.w3.org/2000/svg">
-  </svg>
-  <br/>
-  <div>hhh</div>
 </body>
 
 </html>
