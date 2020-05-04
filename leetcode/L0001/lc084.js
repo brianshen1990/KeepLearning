@@ -3,28 +3,54 @@
 
 Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
 
- 
-
 
 Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
-
- 
 
 
 The largest rectangle is shown in the shaded area, which has area = 10 unit.
 
-
-
 */
-
-
-
 
 /**
  * @param {number[]} heights
  * @return {number}
  */
 var largestRectangleArea = function(heights) {
+    if ( heights.length <=0  ) {
+        return 0;
+    }
+    
+    // init 
+    const MAPPING ={};
+    let seq = new Array(heights.length).fill(0);
+    seq[0] = heights[0];
+    
+    // go seq dp
+    for (let i = 1; i < heights.length ; i++) {
+        let max = 0;
+        let _min = heights[i];
+        for ( let j = i ; j>= 0  ; j-- ) {
+            if ( heights[j] === 0 ) {
+                break;
+            }
+            _min = Math.min(_min, heights[j]);
+            max = Math.max(max, _min*(i-j+1));
+        }
+        seq[i] = max;
+    }
+    // console.log(seq);
+    
+    // res
+    return Math.max(...seq);
+    
+};
+
+
+/**
+ * @param {number[]} heights
+ * @return {number}
+ */
+var largestRectangleAreaOvertime = function(heights) {
     // dynamic
     if ( heights.length === 0 ) {
         return 0;
