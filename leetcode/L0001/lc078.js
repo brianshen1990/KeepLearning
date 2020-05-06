@@ -25,7 +25,7 @@ Output:
  * @param {number[]} nums
  * @return {number[][]}
  */
-var subsets = function(nums) {
+var subsetsOld = function(nums) {
     let ret = [[]];
     for( let i = 1; i<= nums.length ; i++ ) {
         combineHelper( nums, i ,[] , ret);
@@ -60,3 +60,30 @@ var combineHelper = function( allNum ,k , base, ret ) {
         combineHelper(allNum.slice(i+1), k-1, base.concat([value]), ret);
     }
 }
+
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function(nums) {
+    const ret = [];
+    nums = nums.sort( (a, b) => a > b );
+    
+    const helper = (_nums, _res, _path, _index) => {
+        _res.push(_path);
+        for ( let i = _index ; i < _nums.length; i++ ) {
+            helper( _nums, _res, _path.concat(_nums[i]), i+1 );
+        }
+    }
+    
+    helper(nums, ret, [], 0);
+    return ret;
+};
+
+/**
+[1,2,3]
+[]
+[1,2]
+[3,2,1]
+ */

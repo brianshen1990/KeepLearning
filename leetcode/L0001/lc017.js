@@ -28,6 +28,44 @@ Although the above answer is in lexicographical order, your answer could be in a
  * @param {string} digits
  * @return {string[]}
  */
+var letterCombinations2nd = function(digits) {
+    if(digits.length === 0){
+        return [];
+    }
+    let mappings = {
+        "2": ["a","b", "c"],
+        "3": ["d", "e", "f"],
+        "4": ["g", "h", "i"],
+        "5": ["j", "k", "l"],
+        "6": ["m", "n", "o"],
+        "7": ["p", "q", "r",  "s"],
+        "8": ["t", "u", "v"],
+        "9": ["w", "x", "y", "z"]
+    };
+    
+    const ret = [];
+    const helper = (s, res, path ) => {
+        if ( !s ) {
+            ret.push(path.join(""));
+            return 
+        }
+        // console.log(s, s[0]);
+        mappings[s[0]].map( item => {
+            path.push( item );
+            helper( s.substr(1), res, path);
+            path.pop();
+        });
+    }
+    
+    helper(digits, ret, []);
+    return ret;
+};
+
+
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
 var letterCombinations = function(digits) {
     if(digits.length === 0){
         return [];
@@ -71,3 +109,9 @@ let test = function(){
     console.log( letterCombinations("239").length === 36 );
 }
 test();
+
+/**
+"23"
+"7"
+"2323434"
+ */
