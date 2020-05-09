@@ -88,6 +88,52 @@ var helper = function(root, max) {
 
 
 /**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxPathSum2nd = function(root) {
+    if (!root) {
+        return -2147483648;
+    }
+    
+    const helper = (iRoot) => {
+        const res = {
+            maxSum: -Number.MAX_VALUE,
+            oneSideMaxSum: -Number.MAX_VALUE
+        }
+        
+        if (!iRoot) {
+            return res;
+        } 
+        
+        const left = helper(iRoot.left);
+        const right = helper(iRoot.right);
+        res.maxSum = Math.max(
+            Math.max(left.oneSideMaxSum, 0) + 
+            Math.max(right.oneSideMaxSum, 0) + iRoot.val,
+            left.maxSum, 
+            right.maxSum);
+        res.oneSideMaxSum = Math.max( 
+            Math.max(left.oneSideMaxSum, 0) +  iRoot.val,
+            Math.max(right.oneSideMaxSum, 0) + iRoot.val)
+        
+        return res;
+    }
+    
+    const ret = helper(root);
+    // console.log( ret );
+    return ret.maxSum;
+};
+
+/**
 [1,2,3]
 [1,2,-3]
 [-10,9,20,null,null,15,7]

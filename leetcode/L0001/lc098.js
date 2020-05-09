@@ -90,3 +90,65 @@ var Helper = function( root, min, max ) {
     }
     return true;
 }
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST2ndDividerConquer = function(root) {
+    
+    const helper = (iRoot) => {
+        const ret = {
+            valid: false,
+            max: null,
+            min: null
+        }
+        if (!iRoot) {
+            ret.valid = true;
+            return ret;
+        }
+
+        // divide
+        const left = helper( iRoot.left );
+        const right = helper( iRoot.right );
+        
+        // conquer
+        if ( left.valid && right.valid ) {
+            if (left.max && left.max.val >= iRoot.val ) {
+                ret.valid = false;
+                return ret;
+            }
+            if (right.min && right.min.val <= iRoot.val ) {
+                ret.valid = false;
+                return ret;
+            }
+            ret.valid = true;
+            ret.max = right.max || iRoot;
+            ret.min = left.min || iRoot;
+            return ret;
+        } 
+        return ret;
+    }
+    
+    const res = helper(root);
+    return res.valid;
+    
+};
+
+/**
+[2,1,3]
+[5,1,4,null,null,3,6]
+[]
+[-1, -2, -3]
+[-2, -1, -3]
+[1]
+ */
