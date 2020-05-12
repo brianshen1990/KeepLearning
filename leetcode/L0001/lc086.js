@@ -86,3 +86,37 @@ var partition = function(head, x) {
 []
 1
  */
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} x
+ * @return {ListNode}
+ */
+var partition2nd = function(head, x) {
+    const dummyL = new ListNode(0);
+    const dummyG = new ListNode(0);
+    
+    let headL = dummyL;
+    let headG = dummyG;
+    
+    while ( head ) {
+        if ( head.val < x ) {
+            headL.next = head;
+            headL = headL.next;
+        } else {
+            headG.next = head;
+            headG = headG.next;
+        }
+        head = head.next;
+    } 
+    headG.next = null;    
+    headL.next = dummyG.next;
+    return dummyL.next;
+};

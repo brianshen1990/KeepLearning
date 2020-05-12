@@ -93,3 +93,53 @@ let test = function () {
     
 }
 test();
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert2nd = function(nums, target) {
+    let begin = 0;
+    let end = nums.length -1;
+    let middle = -1;
+    
+    // recursive 
+    // find first >= target
+    while( begin + 1 < end ) {
+        middle = begin + Math.floor( (end - begin) / 2 );
+        
+        if ( nums[middle] === target ){
+            begin = middle;
+            end = middle;
+        } else if ( nums[middle] > target ) {
+            end = middle;
+        } else {
+            begin = middle;
+        }
+    }
+    
+    // result 
+    if ( nums[begin] === target || nums[end] === target ) {
+        return nums[begin] === target ? begin : end;
+    }
+    if ( nums[end] < target ) {
+        return end + 1;
+    }
+    if ( nums[begin] > target ) {
+        return begin;
+    }
+    return end;
+    
+};
+
+/**
+[1,3,5,6]
+5
+[1,3,5,6]
+2
+[1,3,5,6]
+7
+[1,3,5,6]
+0
+ */

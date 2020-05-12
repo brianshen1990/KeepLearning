@@ -144,3 +144,63 @@ console.log( searchMatrix( [
   [10],
   [20]
 ], 20) === true );
+
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+var searchMatrix2nd = function(matrix, target) {
+  if ( !(matrix.length > 0 && matrix[0].length > 0) ) {
+      return false;
+  }
+  
+  // init
+  const ROWS = matrix.length;
+  const COLS = matrix[0].length;
+  let begin = 0; 
+  let end = ROWS * COLS-1;
+  let middle = -1;
+  const _helper = (_middle) => {
+      let _row = Math.floor( _middle / COLS );
+      let _col = _middle - _row * COLS;
+      return {_row, _col};
+  } 
+  
+  // recursive 
+  while ( begin + 1 < end ) {
+      middle = begin + Math.floor( (end - begin)/2 );
+      const { _row, _col } = _helper(middle);
+      if ( matrix[_row][_col] === target ) {
+          begin = middle; 
+          end = middle;
+      } else if ( matrix[_row][_col] > target ) {
+          end = middle;
+      } else {
+          begin = middle;
+      }
+  }
+  
+  // result
+  let res = false;
+  [begin, end].map( item => {
+      const { _row, _col } = _helper(item);
+      // console.log( _row, _col );
+      if ( matrix[_row][_col] === target ) {
+          res = true;
+      }
+  });
+  return res;
+  
+};
+
+[[1,3,5,7],[10,11,16,20],[23,30,34,50]]
+3
+[[1,3,5,7],[10,11,16,20],[23,30,34,50]]
+13
+[[]]
+13
+[[12]]
+12
+[[12]]
+13

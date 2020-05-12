@@ -69,3 +69,65 @@ var reverseBetween = function(head, m, n) {
     
     return head;
 };
+
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} m
+ * @param {number} n
+ * @return {ListNode}
+ */
+var reverseBetween2nd = function(head, m, n) {
+    if ( (!head) || n < m ) {
+        return null;
+    }
+    
+    const dummy = new ListNode(0, head);
+    
+    let preM = dummy;
+    for ( let i = 1; i < m ; i++ ) {
+        preM = head;
+        head = head.next;
+    }
+    
+    let pre = null;
+    const postN = head;
+    for ( let i = m ; i <= n ; i++ ) {
+        const temp = head.next;
+        head.next = pre;
+        pre = head;
+        head = temp;
+    }
+    
+    preM.next = pre;
+    postN.next = head;
+    
+    return dummy.next;
+    
+    
+};
+
+/**
+[1,2,3,4,5]
+2
+4
+[1,2,3,4,5]
+2
+2
+[1,2,3,4,5]
+2
+4
+[1,2,3,4,5]
+1
+5
+[1,2,3]
+1
+2
+ */
