@@ -1,18 +1,7 @@
 /**
-147. Insertion Sort List
+148. Sort List
 
-Sort a linked list using insertion sort.
-
-
-A graphical example of insertion sort. The partial sorted list (black) initially contains only the first element in the list.
-With each iteration one element (red) is removed from the input data and inserted in-place into the sorted list
- 
-
-Algorithm of Insertion Sort:
-
-Insertion sort iterates, consuming one input element each repetition, and growing a sorted output list.
-At each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there.
-It repeats until no input elements remain.
+Sort a linked list in O(n log n) time using constant space complexity.
 
 Example 1:
 
@@ -29,60 +18,79 @@ Output: -1->0->3->4->5
 
 /**
  * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
  * }
  */
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
-var insertionSortList = function(head) {
-    if ( !head ) {
-        return head;
-    }
-    let ret = head;
-    let preNext = head;
-    let next = head.next;
-    while( next ) {
-        // console.log( next.val )
-        let pos = ret;
-        let prev = null;
-        while ( pos && pos !== next && pos.val < next.val  ) {
-            prev = pos;
-            pos = pos.next;
+var sortList = function(head) {
+    // merge sort 
+    
+    const _middleNode = (_head) => {
+        if ( !_head ) {
+            return _head;
         }
-        // console.log('here', pos.val)
-        if ( pos === next ) {
-            // the biggest, no need to move
-            preNext = next;
-            next = next.next;
-        } else {
-            // new place
-            if ( prev ) {
-                prev.next = next;
+        let slow = _head;
+        let fast = _head.next;
+        while ( fast && fast.next ) {
+            slow = slow.next;
+            fast = fast.next;
+            fast = fast && fast.next;
+        }
+        return slow;
+    };
+    
+    const _mergeNode = (list1, list2) => {
+        const dummy = new ListNode(0);
+        let _head = dummy;
+        while ( list1 && list2 ) {
+            if ( list1.val < list2.val ) {
+                _head.next = list1;
+                list1 = list1.next;
             } else {
-                // should adjust head
-                ret = next;
+               _head.next = list2;
+                list2 = list2.next; 
             }
-            // previous place
-            preNext.next = next.next;
-            next.next = pos;
-            // preNext = next; // keep prev
-            next = preNext.next;
+            _head = _head.next;
         }
+        if ( list1 ) {
+            _head.next = list1;
+        }
+        if ( list2 ) {
+            _head.next = list2;
+        }
+        return dummy.next;
     }
-    return ret;
+    
+    const _mergeSort = (_head) => {
+        if ( !_head ) {
+            return null;
+        }
+        if ( !_head.next ) {
+            return _head;
+        }
+        
+        const middle = _middleNode(_head);
+        // console.log( middle && middle.val )
+        const right = _mergeSort(middle.next);
+        middle.next = null;
+        const left = _mergeSort(_head);
+        return _mergeNode(left, right);
+    }
+    
+    return _mergeSort(head);
+    
 };
 
 
-
 /**
+[4,2]
+[4]
 []
-[1]
-[1,2]
-[2,1]
+[4,2,1,3]
 [-1,5,3,4,0]
-[-1,5,3,4,0,5,6,7,8,9,0,1,2,34,56,32,567]
  */
