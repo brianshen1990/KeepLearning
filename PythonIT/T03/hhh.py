@@ -1,0 +1,1 @@
+if not re.match('^[a-zA-Z][a-z0-9._]*$', username):
