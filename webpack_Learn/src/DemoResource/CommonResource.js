@@ -23,17 +23,14 @@ const unstable_createResource = (thenable) => {
         });
       }
       switch ( result.status ) {
-        case Pending: {
+        case Pending:
+        case Rejected:  {
           const suspender = result.value;
           throw suspender;
         }
         case Resolved: {
           const value = result.value;
           return value;
-        }
-        case Rejected: {
-          const error = result.value;
-          throw error;
         }
       }
     }
@@ -44,7 +41,6 @@ const unstable_createResource = (thenable) => {
 
 
 const resource = unstable_createResource( (id) => {
-  console.log( `http://localhost:8888/content/${id}` );
   return fetch(`http://localhost:8888/content/${id}`).then(r=>r.json());
 })
 

@@ -5,7 +5,6 @@ const SCIndex = React.lazy( () => import('./SelfCheck/SCIndex') );
 const Dashboard = React.lazy( () => import('./Dashboard/Dashboard') );
 import CommonCatch from './Common/CommonFallBack';
 import DemoResource from './DemoResource/DemoResource';
-import DemoResourceAnother from './DemoResource/DemoResourceAnother';
 
 function App() {
   return (
@@ -54,7 +53,7 @@ function App() {
               <Suspense fallback={<div>Loading...</div>}>
                 <Row>
                   <Col md={6}><DemoResource /></Col>
-                  <Col md={6}><DemoResourceAnother /></Col>
+                  <Col md={6}><DemoResource /></Col>
                 </Row>
               </Suspense>
             </Route>
