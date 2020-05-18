@@ -1,8 +1,11 @@
 import React, { Suspense } from 'react';
-import { Nav, NavItem } from 'reactstrap';
+import { Nav, NavItem, Row, Col } from 'reactstrap';
 import { HashRouter as Router, Switch, Route, NavLink, Redirect } from "react-router-dom";
 const SCIndex = React.lazy( () => import('./SelfCheck/SCIndex') );
 const Dashboard = React.lazy( () => import('./Dashboard/Dashboard') );
+import CommonCatch from './Common/CommonFallBack';
+import DemoResource from './DemoResource/DemoResource';
+import DemoResourceAnother from './DemoResource/DemoResourceAnother';
 
 function App() {
   return (
@@ -32,6 +35,12 @@ function App() {
                 <i className="fas fa-cloud-upload-alt"></i>&nbsp;Upload File
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink to="/DemoResource" strict>
+                <div></div>
+                <i className="fas fa-sort"></i>&nbsp;ResourceCache
+              </NavLink>
+            </NavItem>
           </Nav>
         </div>
         <div className="ais_main_content">
@@ -41,10 +50,20 @@ function App() {
                 <Dashboard />
               </Suspense>
             </Route>
-            <Route path="/SelfCheck">
+            <Route path="/DemoResource">
               <Suspense fallback={<div>Loading...</div>}>
-                <SCIndex />
+                <Row>
+                  <Col md={6}><DemoResource /></Col>
+                  <Col md={6}><DemoResourceAnother /></Col>
+                </Row>
               </Suspense>
+            </Route>
+            <Route path="/SelfCheck">
+              {/* <Suspense fallback={<div>Loading...</div>}> */}
+              <CommonCatch >
+                <SCIndex />
+              </CommonCatch>
+              {/* </Suspense> */}
             </Route>
             <Route path="/">
               <Redirect to="/Dashboard" />
