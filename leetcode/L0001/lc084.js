@@ -15,7 +15,102 @@ The largest rectangle is shown in the shaded area, which has area = 10 unit.
  * @param {number[]} heights
  * @return {number}
  */
-var largestRectangleArea = function(heights) {
+var largestRectangleArea4thHeap = function(heights) {
+    if ( heights.length === 0 ) {
+        return 0;
+    }
+    // padding
+    heights.push(0); 
+    
+    // use stack to cal
+    const stack = [];
+    let max = 0;
+    for ( let i = 0; i < heights.length ; i++ ) {
+        if ( stack.length === 0 ) {
+            stack.push(i);
+        } else {
+            if ( heights[i] >= heights[stack[stack.length-1]] ) {
+                // keep arising
+                stack.push(i);
+            } else {
+                // handle jumping
+                while ( stack.length > 0 && heights[stack[stack.length-1]] > heights[i] ) {
+                    let begPos = 0;
+                    if ( stack.length === 1 ) {
+                        begPos = -1;
+                    } else {
+                        begPos = stack[stack.length-2];
+                    }
+                    const tempArea =  
+                         heights[stack[stack.length-1]] * 
+                         ( i - begPos - 1 );
+                    // console.log(stack, heights[stack[stack.length-1]], i, begPos, tempArea);
+                    max = Math.max(max, tempArea);
+                    stack.pop();
+                }
+                stack.push(i);
+            }
+        }
+    }
+    
+    // res
+    return max;
+};
+
+/**
+ * @param {number[]} heights
+ * @return {number}
+ */
+var largestRectangleArea3rdLeftRight = function(heights) {
+    if ( heights.length === 0 ) {
+        return 0;
+    }
+    
+    const leftMargin = new Array(heights.length).fill(-1);
+    const rightMargin = new Array(heights.length).fill(-1);
+    const areas = new Array(heights.length).fill(0);
+    
+    // cal left 
+    leftMargin[0] = 0;
+    for ( let i = 1; i < heights.length ; i++ ) {
+        if ( heights[i] > heights[i-1] ) {
+            leftMargin[i] = i;
+        } else {
+            let j = i;
+            while (j >=0 && heights[j] >= heights[i]) {
+                j--;
+            }
+            leftMargin[i] = j+1;
+        }
+    }
+    
+    // cal right
+    rightMargin[heights.length-1] = heights.length-1;
+    for ( let i = heights.length - 2 ; i >= 0 ; i-- ) {
+        if ( heights[i] > heights[i+1] ) {
+            rightMargin[i] = i;
+        } else {
+            let j = i; 
+            while ( j <= heights.length-1 && heights[j] >= heights[i] ) {
+                j++;
+            }
+            rightMargin[i] = j-1;
+        }
+    }
+    
+    // cal areas
+    // console.log(leftMargin, rightMargin);
+    for ( let i = 0; i < heights.length ; i++ ) {
+        areas[i] = heights[i] * ( rightMargin[i] - leftMargin[i] + 1 );
+    }
+    return Math.max(...areas);
+};
+
+/**
+ * @param {number[]} heights
+ * @return {number}
+ */
+var largestRectangleArea2ndDP = function(heights) {
     if ( heights.length <=0  ) {
         return 0;
     }
@@ -45,6 +140,14 @@ var largestRectangleArea = function(heights) {
     
 };
 
+/**
+[4,2,0,3,2,5]
+[2,1,5,6,2,3]
+[1]
+[1,2]
+[1,2,3,4,5,6,7,8,9]
+[]
+ */
 
 /**
  * @param {number[]} heights
