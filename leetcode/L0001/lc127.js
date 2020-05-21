@@ -37,6 +37,87 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 
 */
 
+
+/**
+ * @param {string} beginWord
+ * @param {string} endWord
+ * @param {string[]} wordList
+ * @return {number}
+ */
+var ladderLength2ndBFS = function(beginWord, endWord, wordList) {
+    
+    const caled = {};
+    const cache = {}; // bidirect
+    let ret = 0;
+    let found= false;
+    
+    const helperTransable = (word1, word2) => {
+        let diff = 0;
+        for ( let i = 0; i < word1.length; i++ ) {
+            if ( word1[i] !== word2[i] ) {
+                diff++;
+                if (diff > 1) {
+                    break;
+                }
+            }
+        }
+        return diff <= 1;
+    }
+    
+    const helperCache = (word) => {
+        if ( caled[word] === true ) {
+            return;
+        }
+        for ( let i = 0; i < wordList.length ; i++ ) {
+            if ( caled[wordList[i]] ) {
+                continue;
+            }
+            if ( helperTransable(wordList[i], word) ) {
+                cache[word] = cache[word] || {};
+                cache[word][wordList[i]] = true;
+                cache[wordList[i]] = cache[wordList[i]] || {};
+                cache[wordList[i]][word] = true;
+            }
+        }
+        caled[word] = true;
+    }
+    
+    let nextWords = [beginWord];
+    while( nextWords.length > 0 ) {
+        // console.log(nextWords);
+        ret++;
+        let next = [];
+        for ( let i = 0; i < nextWords.length ; i++ ) {
+            if ( caled[nextWords] ) {
+                continue;
+            } else {
+                if ( nextWords[i] === endWord ) {
+                    found = true;
+                    break;
+                }
+                helperCache( nextWords[i] );
+                Object.keys(cache[ nextWords[i] ]).map( item => {
+                    if ( !caled[item] && next.indexOf(item) < 0 && nextWords.indexOf(item) < 0 ) {
+                        next.push(item);
+                    }   
+                })
+            }
+        }
+        if ( found ) {
+            break;
+        }
+        nextWords = next;
+    }
+    
+    if ( found ) {
+        return ret;
+    } else {
+        return 0;
+    }
+
+};
+
+
 /**
  * @param {string} beginWord
  * @param {string} endWord
