@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title of the document</title>
+  <style>
+    .divCenter, .divGridCenter, .divFlexCenter {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+      text-align: center;
+    }
+    .divCenter {
+      vertical-align: middle;
+      display: table-cell;
+    }
+    .divGridCenter {
+      display: grid;
+      align-items: center;
+    }
+    .divFlexCenter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="divCenter">
+    center 
+  </div>
+  <br />
+  <div class="divGridCenter">
+    center 
+  </div>
+  <br />
+  <div class="divFlexCenter">
+    center 
+  </div>
+</body>
+</html>
