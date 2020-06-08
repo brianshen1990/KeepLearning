@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="./index.js" ></script>
+  <style> 
+    .modal.close { display: none; }
+    .modal.open { position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+                width:100%; height: 100%; z-index: 100; 
+                background-color: rgba(0, 0, 0, 0.5); }
+    .modal-content { border: 1px solid gray;  width: 40%; min-width: 400px;
+                margin: 10% auto auto auto; background-color: white;  }
+    .modal-body { border-top: 1px solid gray; border-bottom: 1px solid gray; }
+    .modal-header { font-size: large; }
+    .modal-footer { text-align: right; }
+    .modal-body, .modal-header, .modal-footer { padding: 5px; }
+
+  </style>
+  <title>modal</title>
+</head>
+
+<body>
+  <div>
+    <h3>Open a Modal!</h3>
+    <button onclick="openModal()">Open</button> <br /><br />
+    <button onclick="openModalClass()">Open a Modal encapsuled in a Class</button>
+  </div>
+</body>
+
+<div class="modal close" id="modal_1">
+  <div class="modal-content">
+    <div class="modal-header">Header</div>
+    <div class="modal-body">
+      <div>Body</div>
+      <div>Body</div>
+      <div>Body</div>
+      <div>Body</div>
+    </div>
+    <div class="modal-footer"><button onclick="closeModal()">Close</button></div>
+  </div>
+</div>
+
+</html>
