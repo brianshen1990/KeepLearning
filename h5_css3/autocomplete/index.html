@@ -16,10 +16,9 @@
 <body>
   <div class="search">
     <h3>Search (to test auto complete)</h3>
-    <div class="search-area" onblur="AutoCompletionStop()" >
-      <input onfocus="AutoCompletionStart()"
-        onblur="AutoCompletionStop()"
-        class="search-input" type="text" /> 
+    <div class="search-area" >
+      <input class="search-input" type="text" 
+        onfocus="AutoCompletionStart()" onblur="AutoCompletionStop()"/> 
       <div class="search-input-auto-complete" >
       </div>
     </div>
