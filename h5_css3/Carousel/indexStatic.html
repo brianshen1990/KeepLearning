@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="./index.js" ></script>
+  <style> 
+    .carousel { display: flex; border:1px solid gray; 
+      align-items: center; height: 400px; width: 80%}
+    .carousel-left, .carousel-right { width: 100px; min-width: 100px; text-align: center; }
+    .carousel-left-arr, .carousel-right-arr { width: 90px; height: 90px ; 
+      border: 1px solid gray; border-radius: 45px; margin: auto;
+      font-size: 36px; font-weight: bold; }
+    .carousel-content { height: 100%; width: 100%; }
+    .carousel-content-item {  height: 100%; width: 100%; display: none }
+    .carousel-content-item.active { display: flex; justify-content: center;
+      align-items: center; font-size: 100px; }
+    .carousel-content-item:nth-child(odd) { background-color: orange; }
+    .carousel-content-item:nth-child(even) { background-color: lightblue; }
+  </style>
+  <title>Carousel</title>
+</head>
+
+<body>
+  <div>
+    <h3>Carousel!</h3>
+    <div class="carousel">
+      <div class="carousel-left">
+        <button class="carousel-left-arr" onclick="carouselNext(true)">&lt;</button>
+      </div>
+      <div class="carousel-content">
+        <div class="carousel-content-item active">1</div>
+        <div class="carousel-content-item">2</div>
+        <div class="carousel-content-item">3</div>
+        <div class="carousel-content-item">4</div>
+      </div>
+      <div class="carousel-right">
+        <button class="carousel-right-arr" onclick="carouselNext()">&gt;</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
