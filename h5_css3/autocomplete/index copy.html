@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="./index.js" ></script>
+  <style> 
+    .search { margin-left: 20px; } 
+    .search-input { height: 30px; width: 500px; padding: 0; margin: 0;}
+    .search-input-auto-complete { width : 500px; position: absolute;  }
+    .search-input-auto-complete-btn { height: 25px; width: 100%; text-align: left; 
+        border-radius: 0; border-top: 0; border-width: 1px;}
+    .search-input-auto-complete-btn:hover { background-color: gray; }
+  </style>
+  <title>auto complete</title>
+</head>
+
+<body>
+  <div class="search">
+    <h3>Search (to test auto complete)</h3>
+    <div class="search-area" onblur="AutoCompletionStop()" >
+      <input onfocus="AutoCompletionStart()"
+        onblur="AutoCompletionStop()"
+        class="search-input" type="text" /> 
+      <div class="search-input-auto-complete" >
+      </div>
+    </div>
+    <br />
+    <div>Results<br />Results<br />Results<br />Results<br />Results<br /></div>
+  </div>
+</body>
+</html>
