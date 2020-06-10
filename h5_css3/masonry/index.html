@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="./index.js" ></script>
+  <style> 
+    .masonry-horizontal { display: flex; flex-wrap: wrap; }
+    .masonry-horizontal > div { height: 150px; }
+    .masonry-vertical { display: flex; flex-flow: column wrap;
+        width: 100% ; max-height: 1000px;}
+    .masonry-vertical > div { width: 250px; }
+
+    .masonry-vertical > div , .masonry-horizontal > div { 
+      font-size: 65px; border: 1px solid gray; margin: 10px;
+      display: flex; align-items: center; justify-content: center;}
+    .masonry-vertical > div:nth-child(odd), .masonry-dynamical > div:nth-child(odd), 
+    .masonry-horizontal > div:nth-child(odd) { background-color: orange; }
+    .masonry-vertical > div:nth-child(even), .masonry-dynamical > div:nth-child(even), 
+    .masonry-horizontal > div:nth-child(even) { background-color: aqua; }
+
+    .masonry-horizontal, .masonry-vertical { display: none; }
+
+    .masonry-dynamical { display: grid; 
+      grid-template-columns: repeat(auto-fill, 150px); 
+      column-gap: 10px; row-gap: 5px; grid-auto-rows: 5px;  }
+    .masonry-dynamical > div { width: 150px; font-size: 65px; 
+      border: 1px solid gray; margin: 10px;
+      display: flex; align-items: center; justify-content: center; }
+
+  </style>
+  <title>masonry</title>
+</head>
+
+<body>
+  <div class="masonry-horizontal">
+    <div style="width: 200px;">1</div>
+    <div style="width: 300px;">2</div>
+    <div style="width: 350px;">3</div>
+    <div style="width: 400px;">4</div>
+    <div style="width: 350px;">5</div>
+    <div style="width: 200px;">6</div>
+    <div style="width: 120px;">7</div>
+    <div style="width: 200px;">8</div>
+    <div style="width: 100px;">9</div>
+  </div>
+  <div class="masonry-vertical">
+    <div style="height: 200px;">1</div>
+    <div style="height: 300px;">2</div>
+    <div style="height: 350px;">3</div>
+    <div style="height: 400px;">4</div>
+    <div style="height: 350px;">5</div>
+    <div style="height: 200px;">6</div>
+    <div style="height: 120px;">7</div>
+    <div style="height: 200px;">8</div>
+    <div style="height: 100px;">9</div>
+  </div>
+  <div class="masonry-dynamical">
+  </div>
+</body>
+
+</html>
