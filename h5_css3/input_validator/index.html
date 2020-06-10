@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="./index.js" ></script>
+  <style> 
+    .validator { height: 40px; width: 300px; }
+    
+    .validator > input { height: 34px; width: 300px; }
+    .validator.fail > input { border-color: red; border-style: solid; }
+    .validator.pass > input { border-color: green; border-style: solid; }
+    .validator-message { color: red; }
+  </style>
+  <title>input validator</title>
+</head>
+
+<body>
+  <div class="validator" >
+    <div>Email: </div>
+    <input type="text" onchange="validate(this)" />
+    <div class="validator-message"></div>
+  </div>
+</body>
+
+</html>

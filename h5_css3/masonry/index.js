@@ -1,5 +1,10 @@
 
 const dynamicallyAdd = (n) => {
+
+  const masonry = document.querySelector(".masonry-dynamical");
+  console.log( getComputedStyle(masonry).getPropertyValue('grid-auto-rows') )
+  console.log( getComputedStyle(masonry).getPropertyValue('grid-row-gap') )
+
   const fragment = document.createDocumentFragment();
   for ( let i = 0; i < n ; i++ ) {
     const item = document.createElement("div");
@@ -8,7 +13,7 @@ const dynamicallyAdd = (n) => {
     item.style =  `height: ${ height }px; grid-row-end: span ${Math.ceil(height/10)+1};`
     fragment.appendChild(item);
   }
-  const masonry = document.querySelector(".masonry-dynamical");
+  
   masonry.innerHTML = "";
   masonry.appendChild(fragment);
   // masonry-dynamical
