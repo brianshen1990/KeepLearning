@@ -8,6 +8,7 @@ class PromiseMy {
     this._status = 1;
     func(this._resolve, this._reject);
   }
+
   _STATUS_PENDING = 1;
   _STATUS_DONE = 2;
   _STATUS_ERROR = -1;
@@ -80,6 +81,30 @@ class PromiseMy {
     this._next.splice(0, 0, { func, type: this._FUNCTION_FINALLY } );
     this._nextChain();
   }
+
+  static all( items ) {
+    return new PromiseMy( (resolve, reject) => {
+      const resArr = new Array(items.length).fill(null);
+      const doneArr = new Array(items.length).fill(false);
+      items.map( (item, index) => {
+        item.then( (res) => {
+          resArr[index] = res;
+          doneArr[index] = true;
+          // check if all is done
+          let allDone = true;
+          for ( let done of doneArr ) {
+            allDone = allDone && done;
+            if ( !allDone ) { break; }
+          }
+          if ( allDone ) {
+            resolve(resArr);
+          }
+        }).catch( (err) => {
+          reject(err);
+        });
+      });
+    });
+  }
 }
 
 
@@ -89,26 +114,37 @@ class PromiseMy {
 // const promiseFailure = new PromiseMy( ( resolve, reject ) => { reject("promiseFailure"); })
 // promiseFailure.then( (data) => { console.log( data ); }).catch( (err) => { console.log( err ); });
 
-const promiseChian01 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 01"); })
-const promiseChian02 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 02"); })
-const promiseChian03 = new PromiseMy( ( resolve, reject ) => { reject("promise Chain !!Failure!! 03"); })
+// const promiseChian01 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 01"); })
+// const promiseChian02 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 02"); })
+// const promiseChian03 = new PromiseMy( ( resolve, reject ) => { reject("promise Chain !!Failure!! 03"); })
 
-promiseChian01.then( (res) => {
-  console.log(res);
-  return promiseChian02;
-}).then( (res) => {
-  console.log(res);
-  return promiseChian03;
-}).then( (res) => {
-  console.log(res);
-}).catch( (err) => {
-  console.error(err);
-  throw "error in catch";
-}).catch( (err) => {
-  console.error(err);
-  return "Aha";
-}).then( (res) => {
-  console.log(res);
-}).finally( (res) => {
-  console.log("finally");
-});
+// promiseChian01.then( (res) => {
+//   console.log(res);
+//   return promiseChian02;
+// }).then( (res) => {
+//   console.log(res);
+//   return promiseChian03;
+// }).then( (res) => {
+//   console.log(res);
+// }).catch( (err) => {
+//   console.error(err);
+//   throw "error in catch";
+// }).catch( (err) => {
+//   console.error(err);
+//   return "Aha";
+// }).then( (res) => {
+//   console.log(res);
+// }).finally( (res) => {
+//   console.log("finally");
+// });
+
+
+// const promiseAll01 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 01"); })
+// const promiseAll02 = new PromiseMy( ( resolve, reject ) => { resolve("promise Chain Success 02"); })
+// const promiseAll03 = new PromiseMy( ( resolve, reject ) => { reject("promise Chain !!Failure!! 03"); })
+
+// PromiseMy.all([promiseAll01, promiseAll02, promiseAll03]).then( (res) => {
+//   console.log(res);
+// }).catch( ( err ) => {
+//   console.error(err);
+// })
