@@ -26,5 +26,4 @@ const carouselNextNew = (prev) => {
     SHOW_NUM = ( ++SHOW_NUM ) % shows.length;
   }
   scroll.setAttribute( "style", `transform: translateX(-${SHOW_NUM}00%);` )
-  
 }

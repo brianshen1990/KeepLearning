@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <title>Carousel</title>
   <script src="./index.js" ></script>
   <style> 
-    .carousel { display: flex; border:1px solid gray; 
-      align-items: center; height: 400px; width: 80%}
-    .carousel-left, .carousel-right { width: 100px; min-width: 100px; text-align: center; }
+    .carousel { border:1px solid gray;  align-items: center; 
+      height: 400px; width: 80%; margin: auto; position: relative;;}
+    
+    .carousel-nav { position: absolute; z-index: 1; width: 100%; }
+    .carousel-left, .carousel-right { 
+      width: 100px; min-width: 100px; text-align: center;
+      height: 400px; z-index: 1; display: flex;}
+    .carousel-left { float: left; }
+    .carousel-right { float: right; }
     .carousel-left-arr, .carousel-right-arr { width: 90px; height: 90px ; 
-      border: 1px solid gray; border-radius: 45px; margin: auto;
-      font-size: 36px; font-weight: bold; }
-    .carousel-content { height: 100%; width: 100%; overflow: hidden;}
+      border: 1px solid rgba(220, 220, 220, 75%); border-radius: 45px; margin: auto;
+      font-size: 36px; font-weight: bold; background-color: rgba(220, 220, 220, 25%); }
+
+    .carousel-content { height: 100%; width: 100%; overflow: hidden; }
     .carousel-content-continuous { height: 100%; display: flex;
-      transition: all 0.5s linear; transform: translateX(0); }
-    .carousel-content-item {  
-      height: 100%; width: 100%; min-width: 100%; display: flex;
-      justify-content: center; align-items: center; font-size: 100px;}
+      transition: all 1s linear; transform: translateX(0%); }
+
+    .carousel-content-item {  height: 100%; width: 100%; min-width: 100%; 
+      display: flex; justify-content: center; 
+      align-items: center; font-size: 100px; }
+
     .carousel-content-item:nth-child(odd) { background-color: orange; }
     .carousel-content-item:nth-child(even) { background-color: lightblue; }
   </style>
-  <title>Carousel</title>
 </head>
-
 <body>
   <div>
     <h3>Carousel!</h3>
     <div class="carousel">
-      <div class="carousel-left">
-        <button class="carousel-left-arr" onclick="carouselNextNew(true)">&lt;</button>
+      <div class="carousel-nav">
+        <div class="carousel-left">
+          <button class="carousel-left-arr" onclick="carouselNextNew(true)">&lt;</button>
+        </div>
+        <div class="carousel-right">
+          <button class="carousel-right-arr" onclick="carouselNextNew()">&gt;</button>
+        </div>
       </div>
       <div class="carousel-content">
         <div class="carousel-content-continuous">
-          <div class="carousel-content-item" >1</div>
-          <div class="carousel-content-item" >2</div>
-          <div class="carousel-content-item" >3</div>
-          <div class="carousel-content-item" >4</div>
-        </div>
+          <div class="carousel-content-item">1</div>
+          <div class="carousel-content-item">2</div>
+          <div class="carousel-content-item">3</div>
+          <div class="carousel-content-item">4</div>
+        </div>  
       </div>
-      <div class="carousel-right">
-        <button class="carousel-right-arr" onclick="carouselNextNew()">&gt;</button>
-      </div>
+
+      
     </div>
   </div>
 </body>
-
 </html>
