@@ -1,5 +1,7 @@
 /**
  * 
+https://rxjs-dev.firebaseapp.com/guide/observable
+
 func.call() means "give me one value synchronously"
 observable.subscribe() means "give me any amount of values, either synchronously or asynchronously"
 
