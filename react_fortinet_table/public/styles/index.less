@@ -1,0 +1,74 @@
+
+body {
+  height: 100%;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "PingFangSC-Regular", "Microsoft Yahei", 'Open Sans', sans-serif;
+  color: #53627c;
+  font-size: 14px !important;
+  background-color: #f8f9fb !important;
+}
+
+.forti-table-op {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(54,62,71);
+
+  button.btn.btn-secondary {
+    border: 0;
+    color: white;
+    background-color: transparent;
+  }
+  button.btn.btn-secondary:disabled {
+    color: #999;
+  }
+
+  .forti-table-op-search {
+    margin-right: 10px;
+    .input-group.input-group-sm > *{
+      height: 24px;
+      margin-top: 2px;
+    }
+  }
+}
+
+table.table.forti-table {
+  border-bottom: 1px solid rgb(197,198,200);
+  thead {
+    background-color: rgb(211,212,214);
+    font-weight: bolder;
+  }
+  thead, tbody {
+    td {
+      border-right: 1px solid rgb(197,198,200);
+      padding: 3px;
+      vertical-align: middle;
+      .forti-avatar {
+        display: inline-block;
+        height: 32px; 
+        width: 32px;
+        border-radius: 16px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        color: white;
+      }
+    }
+    td.forti-table-first-col {
+      text-align: center;
+      width: 28px;
+    }
+
+    // this  makes tr looks like table and overflow
+    max-height: 500px;
+    display: block;
+    overflow-y: scroll;
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+}
+
