@@ -20,7 +20,7 @@ export const DOOR_DIRECTION = {
   DOWN: "DOWN"
 }
 
-export const MAX_DOOR_WINDOW = 10;
+export const MAX_DOOR_WINDOW = 100;
 
 export class DoorStore extends Reflux.Store
 {
@@ -34,7 +34,7 @@ export class DoorStore extends Reflux.Store
           doorDirection: DOOR_DIRECTION.UP
         }; 
         this.interval = null;
-        this.opTime = 1000;
+        this.opTime = 50;
         this.listenables = DoorActions;
     }
     onStart() {
@@ -52,6 +52,7 @@ export class DoorStore extends Reflux.Store
     onDetect() {
       if ( this.state.doorDirection === DOOR_DIRECTION.DOWN ) {
         this._stop(DOOR_STATUS.STOPPED_DURING_DOWN);
+        // 
       }
     }
 

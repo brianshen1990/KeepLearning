@@ -44,20 +44,22 @@ function FTable () {
     }
   }
   const cloneItem = () => {
-    const cloneItems = dataset.filter( item => selected.indexOf(item.name) >= 0 )
+    const datasetClone = [...dataset];
+    datasetClone.filter( item => selected.indexOf(item.name) >= 0 )
       .map( item => {
         const ret = Object.assign({}, item);
-        
+        ret.name += "_copy";
         while ( true ) { 
-          ret.name = `${ret.name}_copy`;
-          let duplicated = dataset.filter( item => item.name === ret.name );
+          let duplicated = datasetClone.filter( item => item.name === ret.name );
           if ( duplicated.length === 0 ) {
             break;
+          } else {
+            ret.name += "_copy";
           }
         }
-        return ret;
+        datasetClone.push(ret);
       });
-    setDataset( dataset.concat(cloneItems) );
+    setDataset( [...datasetClone] );
     setSelected([]);
   }
   const deleteItem = () => {
