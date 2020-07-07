@@ -1,36 +1,89 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <script src="./index.js" ></script>
+  <script>
+    const dynamicallyAdd = (n) => {
+      const masonry = document.querySelector(".masonry-dynamical");
+      console.log( getComputedStyle(masonry).getPropertyValue('grid-auto-rows') )
+      console.log( getComputedStyle(masonry).getPropertyValue('grid-row-gap') )
+      const fragment = document.createDocumentFragment();
+      for ( let i = 0; i < n ; i++ ) {
+        const item = document.createElement("div");
+        item.textContent = i+1;
+        // random generate height
+        const height = Math.floor(Math.random() * 30 + 5) * 10 ; 
+        // why divide 10? 10 = 5 row height + 5 spaces between rows
+        item.style =  `height: ${ height }px; grid-row-end: span ${Math.ceil(height/10)+1};`; 
+        fragment.appendChild(item);
+      }
+      masonry.innerHTML = "";
+      masonry.appendChild(fragment);
+    }
+    setTimeout( ()=> {
+      dynamicallyAdd(100);
+    }, 500);
+  </script>
   <style> 
-    .masonry-horizontal { display: flex; flex-wrap: wrap; }
-    .masonry-horizontal > div { height: 150px; }
-    .masonry-vertical { display: flex; flex-flow: column wrap;
-        width: 100% ; max-height: 1000px;}
-    .masonry-vertical > div { width: 250px; }
+    .masonry-float { border: 1px dashed purple; width: 100%; display: flow-root;  }
+    .masonry-float > div { height: 150px;  float: left; 
+      font-size: 65px; border: 1px dashed gray; margin: 5px; 
+      text-align: center; line-height: 150px;}
+    .masonry-float > div:nth-child(odd) { background-color: orange; }
+    .masonry-float > div:nth-child(even) { background-color: aqua; }
 
-    .masonry-vertical > div , .masonry-horizontal > div { 
-      font-size: 65px; border: 1px solid gray; margin: 10px;
-      display: flex; align-items: center; justify-content: center;}
-    .masonry-vertical > div:nth-child(odd), .masonry-dynamical > div:nth-child(odd), 
+
+    .masonry-horizontal { display: flex; flex-wrap: wrap; border: 1px dashed purple }
+    .masonry-horizontal > div { height: 150px; font-size: 65px; border: 1px dashed gray; 
+      margin: 5px; display: flex; align-items: center; justify-content: center;}
     .masonry-horizontal > div:nth-child(odd) { background-color: orange; }
-    .masonry-vertical > div:nth-child(even), .masonry-dynamical > div:nth-child(even), 
     .masonry-horizontal > div:nth-child(even) { background-color: aqua; }
 
-    .masonry-horizontal, .masonry-vertical { display: none; }
 
-    .masonry-dynamical { display: grid; 
-      grid-template-columns: repeat(auto-fill, 150px); 
-      column-gap: 10px; row-gap: 5px; grid-auto-rows: 5px;  }
-    .masonry-dynamical > div { width: 150px; font-size: 65px; 
-      border: 1px solid gray; margin: 10px;
+    .masonry-vertical { display: flex; flex-flow: column wrap; width: 100% ; 
+        max-height: 1000px; border: 1px dashed purple }
+    .masonry-vertical > div { width: 250px; font-size: 65px; border: 1px solid gray; 
+      margin: 5px; display: flex; align-items: center; justify-content: center;}
+    .masonry-vertical > div:nth-child(odd) { background-color: orange; }
+    .masonry-vertical > div:nth-child(even) { background-color: aqua; }
+
+
+    .masonry-grid {  display: grid; grid-template-columns: repeat(auto-fill, 150px); 
+      column-gap: 10px; grid-auto-rows: 50px;}
+    .masonry-grid > div { width: 150px; font-size: 65px; border: 1px solid gray; margin: 10px;
       display: flex; align-items: center; justify-content: center; }
+    .masonry-grid > div:nth-child(odd) { background-color: orange; }
+    .masonry-grid > div:nth-child(even) { background-color: aqua; }
+
+
+    .masonry-dynamical { display: grid; grid-template-columns: repeat(auto-fill, 150px); 
+      column-gap: 10px; row-gap: 5px; grid-auto-rows: 5px;  }
+    .masonry-dynamical > div { width: 150px; font-size: 65px; border: 1px solid gray; margin: 10px;
+      display: flex; align-items: center; justify-content: center; }
+    .masonry-dynamical > div:nth-child(odd) { background-color: orange; }
+    .masonry-dynamical > div:nth-child(even) { background-color: aqua; }
+
+
+    .masonry-vertical, .masonry-grid, .masonry-horizontal, .masonry-float { display: none; }
 
   </style>
   <title>masonry</title>
 </head>
 
 <body>
+  <h2 style="display: none;">Horizontal (float):</h2>
+  <div class="masonry-float">
+    <div style="width: 200px;">1</div>
+    <div style="width: 300px;">2</div>
+    <div style="width: 350px;">3</div>
+    <div style="width: 400px;">4</div>
+    <div style="width: 350px;">5</div>
+    <div style="width: 200px;">6</div>
+    <div style="width: 120px;">7</div>
+    <div style="width: 200px;">8</div>
+    <div style="width: 100px;">9</div>
+  </div>
+
+  <h2 style="display: none;">Horizontal (flex):</h2>
   <div class="masonry-horizontal">
     <div style="width: 200px;">1</div>
     <div style="width: 300px;">2</div>
@@ -42,6 +95,8 @@
     <div style="width: 200px;">8</div>
     <div style="width: 100px;">9</div>
   </div>
+
+  <h2 style="display: none;">Vertical (flex):</h2>
   <div class="masonry-vertical">
     <div style="height: 200px;">1</div>
     <div style="height: 300px;">2</div>
@@ -53,6 +108,21 @@
     <div style="height: 200px;">8</div>
     <div style="height: 100px;">9</div>
   </div>
+
+  <h2 style="display: none;">Masonry (Grid):</h2>
+  <div class="masonry-grid">
+    <div style="height: 200px; grid-row-end: span 4;" >1</div>
+    <div style="height: 300px; grid-row-end: span 6;">2</div>
+    <div style="height: 350px; grid-row-end: span 7;">3</div>
+    <div style="height: 400px; grid-row-end: span 8;">4</div>
+    <div style="height: 350px; grid-row-end: span 7;">5</div>
+    <div style="height: 200px; grid-row-end: span 4;">6</div>
+    <div style="height: 120px; grid-row-end: span 3;">7</div>
+    <div style="height: 200px; grid-row-end: span 4;">8</div>
+    <div style="height: 100px; grid-row-end: span 2;">9</div>
+  </div>
+
+  <h2>Masonry (Grid Dynamically):</h2>
   <div class="masonry-dynamical">
   </div>
 </body>
