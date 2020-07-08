@@ -6,7 +6,9 @@ const fs = require('fs');
 const Split_Line = new Array(15).fill("-").join("");
 
 // https://ca.desknibbles.com/products.json?limit=250&page=10
-const getAllSnackProducts = async ( ) => {
+const _getAllSnackProducts = async ( ) => {
+  
+  console.log( `${Split_Line} Begin fetching snack products from remote ${Split_Line}` );
   let ret = [];
   let page = 1;
   const CacheType = {};
@@ -24,6 +26,7 @@ const getAllSnackProducts = async ( ) => {
   }
   console.log( "Debug --- Product Types: ",  Object.keys(CacheType) );
   console.log( "All snacks length: ", ret.length );
+  console.log( `${Split_Line} Finish fetching snack products from remote ${Split_Line}` );
   return ret;
 }
 
@@ -142,7 +145,7 @@ const _calculatePrice = (personProduct) => {
   console.log( `${Split_Line} Finish giving total price information ${Split_Line}` );
 }
 
-getAllSnackProducts()
+_getAllSnackProducts()
 // _getAllSnackProductsFromJSON()
   .then( _buildSnackMatchCache )
   .then( _stockedSnacks )
