@@ -128,7 +128,7 @@ The print is:
 ]
 ```
 
-Obviously, the snack category falls to `Food & Beverages`
+Obviously, the snack category falls in `Food & Beverages`
 
 ### **5.2 Get all snack products** : 
 
@@ -136,7 +136,7 @@ Same with 5.1, add a filter to results. And there are 802 snacks.
 
 ### **5.3 Match snackers' favorite snacks to products**
 
-- Since the snacker's `fave_snack` is in the form of `Steuber, Berge and Block` , so we split by regex `/(, )|( and )/` and remove empty.
+- Since the snacker's `fave_snack` is in the form of `Steuber, Berge and Block` , so we split the string by regex `/(, )|( and )/` and remove empty.
 - Iterate each `fave_snack` and match in stocked products in 5.2 .
 - When matching, match `title` and `vender` and store the result in a hash.
   ```
@@ -267,6 +267,23 @@ const _calculatePrice = (personProduct) => {
   console.log( `Total: ${res.toFixed(2)}` );
   console.log( `${Split_Line} Finish giving total price information ${Split_Line}` );
 }
+```
+
+### **5.7 Combine them**
+
+It can be done within one promise chain. But put them in different chain makes it easier to give answers and explanations. 
+
+``` javascript
+getAllSnackProducts()
+// _getAllSnackProductsFromJSON()
+  .then( _buildSnackMatchCache )
+  .then( _stockedSnacks )
+  .then( _snackerEmail )
+  .then( _calculatePrice )
+  .catch( err => {
+    console.error(err);
+  }
+)
 ```
 
 ## 6. How to run
