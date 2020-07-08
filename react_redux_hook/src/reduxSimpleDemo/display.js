@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 import { mapDispatchToProps, mapStateToProps } from './countStore/binders'
 
 function display(props) {
