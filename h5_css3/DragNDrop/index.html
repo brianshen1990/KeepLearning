@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    function dragstart_handler(ev) {
+      ev.dataTransfer.setData("application/my-app", ev.target.id);
+      ev.dataTransfer.dropEffect = "move";
+    }
+    function dragover_handler(ev) {
+      ev.preventDefault();
+      ev.dataTransfer.dropEffect = "Movecopy"
+    }
+
+    function drop_handler(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("application/my-app");
+      if ( data ) {
+        ev.target.appendChild(document.getElementById(data));
+      } else {
+        const files = ev.dataTransfer.files;
+        for (let i=0, file; file=files[i]; i++) {
+          if (file.type.match(/image.*/)) {
+            const reader = new FileReader();
+            reader.onload = function(e2) {
+              const img = document.createElement('img');
+              img.src= e2.target.result;
+              img.className = "drapable-img";
+              img.draggable = true;
+              img.id = `_local_img_${Math.random() * 10000 % 10000}`;
+              img.ondragstart = dragstart_handler;
+              ev.target.appendChild(img);
+            }
+            reader.readAsDataURL(file); // start reading the file data.
+          }
+        }
+      }
+    }
+  
+    function chooseLayout() {
+      document.querySelectorAll(".big").forEach( item => item.className = "big hide" );
+      document.querySelector(`#layout_${document.querySelector("input[name=layout_type]:checked").value}` ).className = "big";
+      document.querySelectorAll(".drapable-container").forEach( (item) => {
+        item.ondrop = drop_handler;
+        item.ondragover = dragover_handler;
+      })
+    }
+    if ( document.readyState === "complete" ) {
+      chooseLayout();
+    } else {
+      document.onreadystatechange = () => {
+        chooseLayout();
+      };
+    }
+    
+
+  </script>
+  <style>
+    .drapable-container { height: 300px; width: 300px; margin: 10px; border: 1px dashed gray; }
+    .drapable-img { width:100%; height: 100%; }
+
+    .small { width: 100px;}
+    .small > div { margin: 1px; border: 1px dashed gray; background-color: gray;}
+    .big { width: 910px; display: grid;}
+    .big > div { margin: 1px; border: 1px dashed gray;}
+    .hide { display: none;}
+  </style>
+</head>
+
+<body>
+  <div style="display: flex; justify-content: space-between;">
+    <div>
+      <h3>Step 1: Choose a template</h3>
+      <div  style="display: flex;">
+        <div style="display: flex; align-items: center;">
+          <input type="radio" onclick="chooseLayout()" checked name="layout_type" value="1" />
+        </div>
+        <div style="display: grid; grid-template-columns: 33.3% 66.6%;" class="small">
+          <div style="width: 30px; height: 60px"></div>
+          <div style="width: 63px; height: 60px;"></div>
+        </div>
+      </div>
+      <div style="display: flex;">
+        <div style="display: flex; align-items: center;">
+          <input type="radio" onclick="chooseLayout()" name="layout_type" value="2" />
+        </div>
+        <div style="display: grid; grid-template-columns: 33.3% 33.3% 33.3%;" class="small">
+          <div style="width: 30px; height: 30px"></div>
+          <div style="width: 30px; height: 30px"></div>
+          <div style="width: 30px; height: 30px"></div>
+          <div style="width: 30px; height: 30px"></div>
+          <div style="width: 30px; height: 30px"></div>
+          <div style="width: 30px; height: 30px"></div>
+        </div>
+      </div>
+      <div style="display: flex;">
+        <div style="display: flex; align-items: center;">
+          <input type="radio" onclick="chooseLayout()" name="layout_type" value="3" />
+        </div>
+        <div style="display: grid; grid-template-columns: 33.3% 33.3% 33.3%; grid-auto-rows: 33px;" class="small">
+          <div style="width: 63px; height: 63px; grid-column: span 1 / 2; grid-row: span 1 / 2;"></div>
+          <div style="width: 30px; height: 30px; grid-row: 1; grid-column: 3;"></div>
+          <div style="width: 30px; height: 30px; grid-row: 2; grid-column: 3;"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Step 2: Drag and Drop local photos</h3>
+      <div id="layout_1" style="grid-template-columns: 33.3% 66.6%;" class="big">
+        <div class="drapable-container" style="width: 300px; height: 603px"></div>
+        <div class="drapable-container" style="width: 603px; height: 603px;"></div>
+      </div>
+
+      <div id="layout_2" style="grid-template-columns: 33.3% 33.3% 33.3%;" class="big">
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px"></div>
+      </div>
+   
+      <div id="layout_3" style="grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 303px;" class="big">
+        <div class="drapable-container" style="width: 603px; height: 603px; grid-column: span 1 / 2; grid-row: span 1 / 2;"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px; grid-row: 1; grid-column: 3;"></div>
+        <div class="drapable-container" style="width: 300px; height: 300px; grid-row: 2; grid-column: 3;"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
