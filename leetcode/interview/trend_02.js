@@ -1,4 +1,4 @@
-// arr and K, [1...K], no decrement
+// arr and K, must only contains and include all of [1...K], no decrement
 // [1,2,3,4], 3 false
 // [1,3,4], false
 // [1,1,2,3,4], 4 false
@@ -38,3 +38,4 @@ console.log( Solution( [-1,1,2,3,4], 3 )  === false);
 console.log( Solution( [1,2,3,4], 3 ) === false );
 console.log( Solution( [1,2,3,5], 5 ) === false );
 console.log( Solution( [1,2,3,4], 4 ) === true );
+console.log( Solution( [4,3,2,1], 4 ) === false );
