@@ -20,9 +20,4 @@ Learn, practice, test and then absorb.
 - [ UI 04: Modal Implementation using position, z-index ](h5_css3/modal/index.html), [Medium](https://medium.com/@houwei.shen/ui-hands-on-04-modal-implementation-d7338cd43748)
 - [ UI 05: Carousel Implementation using transform and transition ](h5_css3/Carousel/index.html), [Medium](https://medium.com/@houwei.shen/ui-hands-on-05-carousel-implementation-using-transform-and-transition-a22448a0f301)
 - [ UI 06: Masonry Implementation using flex and grid ](h5_css3/masonry/index.html),  [Medium](https://medium.com/@houwei.shen/ui-06-masonry-implementation-using-flex-and-grid-3933a2627e98)
-
-
-## Personal Projects
-- [Fortinet Table](react_fortinet_table/README.md)
-- [Fortinet Garage](react_fortinet_garage/README.md)
-- [Hoppier](Hoppier_fun/readme.md)
+- [ UI 07: Masonry Implementation using flex and grid ](h5_css3/DragNDrop/index.html),  [Medium](https://medium.com/@houwei.shen/ui-07-photo-collaging-using-drag-and-drop-ea62c19fdd8a)
