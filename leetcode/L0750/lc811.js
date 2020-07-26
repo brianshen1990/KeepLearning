@@ -1,5 +1,5 @@
-
-/*
+/**
+811. Subdomain Visit Count
 A website domain like "discuss.leetcode.com" consists of various subdomains. At the top level, we have "com", at the next level, we have "leetcode.com", and at the lowest level, "discuss.leetcode.com". When we visit a domain like "discuss.leetcode.com", we will also visit the parent domains "leetcode.com" and "com" implicitly.
 
 Now, call a "count-paired domain" to be a count (representing the number of visits this domain received), followed by a space, followed by the address. An example of a count-paired domain might be "9001 discuss.leetcode.com".
@@ -29,28 +29,31 @@ The length of each domain name will not exceed 100.
 Each address will have either 1 or 2 "." characters.
 The input count in any count-paired domain will not exceed 10000.
 The answer output can be returned in any order.
-*/
 
-// 811 https://leetcode.com/problems/subdomain-visit-count/
+ */
 
-const countSiteVists = (records) => {
 
-  // ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
-  const cache = {};
-  records.map( item => {
-    const strArr = item.split(" ");
-    const cnt = parseInt( strArr[0] );
-    const domain = strArr[1].split(".");
-    domain.map( (subD, index) => {
-      const realDomain = domain.slice(index).join(".");
-      cache[realDomain] = cache[realDomain] || 0;
-      cache[realDomain] += cnt;
-    });
-  }) 
-  return Object.keys(cache).map( item => `${cache[item]} ${item}` );
-}
+/**
+ * @param {string[]} cpdomains
+ * @return {string[]}
+ */
+var subdomainVisits = (records) => {
+    // ["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+    const cache = {};
+    records.map( item => {
+      const strArr = item.split(" ");
+      const cnt = parseInt( strArr[0] );
+      const domain = strArr[1].split(".");
+      domain.map( (subD, index) => {
+        const realDomain = domain.slice(index).join(".");
+        cache[realDomain] = cache[realDomain] || 0;
+        cache[realDomain] += cnt;
+      });
+    }) 
+    return Object.keys(cache).map( item => `${cache[item]} ${item}` );
+  }
 
-// O(N), K(.) K*O(N) -> O(N)
-// k * n -> O(N)
-console.log( countSiteVists(["9001 discuss.leetcode.com"]) ) 
-console.log( countSiteVists(["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]) ) 
+/**
+["9001 discuss.leetcode.com"]
+["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+ */

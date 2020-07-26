@@ -18,3 +18,33 @@ all_courses = [
 Sample_ouput(in any order):
 ["Creative Writing","Databases","Data Structures"]
 */
+
+/**
+I got the similar question to " 210 Course Schedule II" on Karat.io platform.
+Time to solve: 2 hours
+
+Input:
+Instead of the integer 2D array of [course,prerequisite] form and the number of courses, the input was ONLY 2D String array of [prerequisite,course] form. Notice the inversion of the mapping from the original question.
+
+The output was supposed to be the name of the course which is currently taken if you are AT the halfway stage. If there are two courses at halfway, choose the first one i.e. when there are evn number of courses.
+
+Example input:
+[DS Algo]
+[FoundationCS OS]
+[CN CA]
+[Algo FundationCS]
+[CA DS]
+[SD CN]
+
+Output: DS
+
+Explaination: Total 7 courses are there. if you look at the mapping and list out the order of courses. DS will be the 4th course. so at HALFWAY, you are taking DS.
+
+If there are 6 courses, Then return the 3rd course of the sequence, not 4th because at Halfway, the first middle course is course number 3.
+ */
+
+const hh = new Set();
+hh.add(1);
+console.log(...hh);
+hh.delete(1)
+console.log(...hh);
