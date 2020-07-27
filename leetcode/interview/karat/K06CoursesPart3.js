@@ -43,8 +43,14 @@ Explaination: Total 7 courses are there. if you look at the mapping and list out
 If there are 6 courses, Then return the 3rd course of the sequence, not 4th because at Halfway, the first middle course is course number 3.
  */
 
-const hh = new Set();
-hh.add(1);
-console.log(...hh);
-hh.delete(1)
-console.log(...hh);
+/**
+2 给定 一些 <course, course> 代表 prerequisite， 只有一条可行的路径， 返回中间的那节课
+eg. ("A", "C"), ("B", "D"), ("D", "A"), ("G", "E"), ("C", "F"), ("E", "B")
+唯一路径为 G->E->B->D->A->C->F
+返回 D 
+
+3. 给定一些 <course, course>代表prerequisite， 返回每条路径中间的那节课
+eg. ("A", "B"), ("B", "D"), ("E", "B"), ("E", "C"), ("C", "F"), ("E", "F")
+路径为 ABD, EBD, ECF, EF
+返回 B,C,E
+ */
