@@ -26,7 +26,6 @@ const findEarliestAncestor = (parentChildPairs, child) => {
   });
   // O(N)
   
-  
   // BFS O(N)
   let ret = -1;
   if ( child in cache ) { 
