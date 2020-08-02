@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Stick</title>
+  <style>
+    .sticky-dt dt { background-color: lightblue; font-size: larger; position: sticky; top: 5px; }
+    .table_container { width: 100%; overflow-x: scroll; margin-top: 200px; }
+    table { border-spacing: 0px; }
+    td, th { border: 1px gray solid; border-collapse: collapse; 
+        min-width: 100px; overflow-x: hidden; line-break: strict;  }
+    .td-sticky { position: sticky; right: 0px;  background-color: lightgoldenrodyellow; }
+    .stick-header th { position: sticky; top: 0px;  background-color: lightgray; }
+    .sticky-div { position: sticky; top: 0px; background-color: cyan; padding: 10px; }
+  </style>
+</head>
+<body>
+  <div class="sticky-dt">
+    <dt>paragraph 1 </dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 2</dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 3 </dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 4</dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+  </div>
+
+  <div style="margin-top: 200px;">
+    <table>
+      <thead>
+        <tr class="stick-header">
+          <th>No.</th><th>Col 1</th><th>Col 2</th><th>Col 3</th><th>Col 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>2</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>3</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>4</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>5</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>6</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>7</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>8</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+        <tr>
+          <td>9</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table_container">
+    <table>
+      <thead>
+        <tr>
+          <td>No.</td><td>Col 1</td><td>Col 2</td><td>Col 3</td><td>Col 4</td><td>Col 5</td><td>Col 6</td><td>Col 7</td><td>Col 8</td><td>Col 9</td><td>Col 10</td><td class="td-sticky">Col Sticky</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td><td>Col 5 Content</td><td>Col 6 Content</td><td>Col 7 Content</td><td>Col 8 Content</td><td>Col 9 Content</td><td>Col 10 Content</td><td class="td-sticky">Quick Actions</td>
+        </tr>
+        <tr>
+          <td>2</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td><td>Col 5 Content</td><td>Col 6 Content</td><td>Col 7 Content</td><td>Col 8 Content</td><td>Col 9 Content</td><td>Col 10 Content</td><td class="td-sticky">Quick Actions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table_container">
+    <table>
+      <thead>
+        <tr>
+          <td>No.</td><td>Col 1</td><td>Col 2</td><td>Col 3</td><td>Col 4</td><td class="td-sticky">Col Sticky</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td><td class="td-sticky">Quick Actions</td>
+        </tr>
+        <tr>
+          <td>2</td><td>Col 1 Content</td><td>Col 2 Content</td><td>Col 3 Content</td><td>Col 4 Content</td><td class="td-sticky">Quick Actions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <div class="sticky-div">
+      <input type="text" /> &nbsp; <button>Search</button>
+    </div>
+    <dt>paragraph 1 </dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 2</dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 3 </dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+    <dt>paragraph 4</dt>
+    <dd>A long weekend is a weekend that is at least three days long (i.e. a three-day weekend), due to a public or unofficial holiday occurring on either the following Monday or preceding Friday.
+      Many countries also have four-day weekends, in which two days adjoining the weekend are holidays. Examples are Easter Monday / Good Friday, and Christmas Day / Boxing Day.</dd>
+  </div>
+</body>
+</html>
