@@ -1,0 +1,57 @@
+class Tooltip extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.el = document.createElement("div");
+  }
+  componentDidMount = () => {
+    portalRoot.appendChild(this.el);
+  };
+
+  componentWillUnmount = () => {
+    portalRoot.removeChild(this.el);
+  };
+  render() {
+    // Write your code here
+    return ReactDOM.createPortal(
+      <React.Fragment>{this.props.text}</React.Fragment>
+      , this.el
+    );
+  }
+}
+
+class App extends React.Component {
+  state = {
+    text: ''
+  }
+
+  onDocumentClick = (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      this.setState({ text: event.target.textContent })
+    }
+  }
+  
+  componentDidMount() {
+    document.addEventListener('click', this.onDocumentClick)
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.onDocumentClick)
+  }
+
+  render() {
+    return <div>
+      {this.props.children}
+      <Tooltip text={this.state.text}/>
+    </div>
+  }
+}
+
+document.body.innerHTML = "<div id='root'></div><div id='tooltip'></div>";
+const rootElement = document.getElementById("root");
+const portalRoot = document.getElementById("tooltip");
+ReactDOM.render(<App>
+  <button id="button1">First button</button>
+  <button id="button2">Second button</button>
+</App>, rootElement);
+document.getElementById("button2").click();
+setTimeout(() => console.log(document.body.innerHTML));
