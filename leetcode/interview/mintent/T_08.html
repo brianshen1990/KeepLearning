@@ -1,0 +1,58 @@
+
+<!-- /** 
+ * Question 08
+ * Complete the List component, which accepts an items props and moves the clicked elements to the first place in the list
+ * 
+ * For example, if the component has the list prop ["A", "B", "C"], the list should look like:
+ * <ul>
+ *   <li>A</li>
+ *   <li>B</li>
+ *   <li>C</li>
+ * </ul>
+ * 
+ * When item B is clicked in the list above, the list should be reordered, resulting in the following order:
+ * <ul>
+ *   <li>B</li>
+ *   <li>A</li>
+ *   <li>C</li>
+ * </ul>
+ * 
+*/ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/jsx">        
+    const List = (props) => {
+      const [items, setItems] = React.useState(props.items);
+      const click = (clickItem) => {
+        setItems( [
+          ...items.filter( item => clickItem === item ),
+          ...items.filter( item => clickItem !== item ),
+        ]);
+      }
+      return <ul>
+        { items.map( item => <li key={item} onClick={ () => click(item) }>{item}</li> ) }
+        </ul>;
+    }
+    window.onload = function () {
+
+      document.body.innerHTML = "<div id='root'> </div>";
+      const rootElement = document.getElementById("root");
+      ReactDOM.render( <List items={["A", "B", "C"]} />, rootElement);
+
+      let listItem = document.querySelectorAll("li")[1];
+      if ( listItem ) {
+        listItem.click();
+      }
+      setTimeout(() => console.log( document.getElementById("root").innerHTML));
+    }
+
+  </script>
+</head>
+  <body></body>
+</html>
