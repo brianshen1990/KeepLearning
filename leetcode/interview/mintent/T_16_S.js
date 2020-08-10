@@ -19,7 +19,7 @@
  * 1. √ A file config.txt.backup  containing the original contents of config.txt will be generated.
  * 2. √ The config.txt file will be modified in-place.
  * 3. x Every IP_ADDRESS placeholder in config.txt will be replaced with 127.0.0.1 (Line 3 not included, so wrong) 
- * 4. xThe first line of config.txt is printed to the console (all lines)
+ * 4. x The first line of config.txt is printed to the console (all lines)
  */
 
 
