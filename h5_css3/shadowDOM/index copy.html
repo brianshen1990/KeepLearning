@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>shadowDom</title>
+  <script src="./index.js" ></script>
+  <style> 
+    /* p { color: red; } */
+    /* .out-host { border-style: solid;} */
+  </style>
+</head>
+<body>
+  <div>
+    <div>
+      <h2>Title (Standard DOM )</h2>
+      <p>I'm not in the shadow DOM</p>
+    </div>
+    <h1>Below is Shadow DOM</h1>
+    <hr />
+    <popup-info data-text="popup-info"></popup-info>
+    <hr />
+
+    <card-info class="out-host">
+      <h2 slot="header">Title</h2>
+      <p slot="content">Content</p>
+    </card-info>
+
+    <hr />
+    <div id="shadowRoot"></div>
+  </div>
+</body>
+</html>

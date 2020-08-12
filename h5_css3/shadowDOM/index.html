@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>shadowDom</title>
+  <script>
+    window.onload = () => {
+      // shadowDOM manual
+      const shadowRoot = document.querySelector("#shadowRoot");
+      const shadow = shadowRoot.attachShadow({mode: 'open'});
+      const style = document.createElement('style');
+      style.textContent = `p { color: blue; } `;
+      shadow.appendChild(style);
+      const outer = document.createElement('div');
+      const header = document.createElement('h2');
+      const content = document.createElement('p');
+      header.innerHTML = "Card Header (ShadowDOM Manual)"; 
+      header.className = "card-header";
+      content.innerHTML = "Card Content, I'm added to shadowRoot in a shadow DOM";
+      outer.appendChild(header);
+      outer.appendChild(content);
+      shadow.appendChild(outer);
+
+      class CardInfoFixed extends HTMLElement {
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({mode: 'open'});
+          shadowRoot.innerHTML = `<style>p { background-color: green; }</style>
+<div>
+  <h2>Card Header in a ShadowDOM with Custom Elements</h2>
+  <p>Card Content in a ShadowDOM with Custom Elements</p>
+</div>`;
+        }
+      }
+      customElements.define('card-info-fixed', CardInfoFixed);
+
+      class CardInfo extends HTMLElement {
+        constructor() {
+          super();
+          const shadowRoot = this.attachShadow({mode: 'open'});
+          shadowRoot.innerHTML = `<style> 
+    :host { border: 1px dashed pink; display: block; padding: 5px;}
+    #card { border: 1px solid gray; border-radius: 4px; }
+    .card-header { border-bottom: 1px solid orange; }
+    p, ::slotted(p) { color: green; } </style>
+<div id="card">
+  <div class="card-header"> <slot id="header" name="header"><h2>Default Header</h2></slot></div>
+  <div class="card-content"> <slot id="content" name="content"><p>Default Template</p></slot></div>
+</div>`;
+        }
+      }
+      customElements.define('card-info', CardInfo);
+
+    }
+  </script>
+  <style> .card { border: 1px solid gray; border-radius: 4px; }
+    .card-header { border-bottom: 1px solid gray; }
+    .outer-border { border-color: chartreuse;} </style>
+</head>
+<body>
+  <div>
+    <div class="card">
+      <div class="card-header"> <h2>Card Title (Standard DOM )</h2></div>
+      <div class="card-content"><p>Card Content: I'm not in the shadow DOM</p></div>
+    </div>
+    <div id="shadowRoot"></div>
+    <card-info-fixed></card-info-fixed>
+    <card-info></card-info>
+    <br />
+    <card-info class="outer-border">
+      <h2 slot="header">Customized Slot Title</h2>
+      <p slot="content">Customized Slot Content</p>
+    </card-info>
+  </div>
+</body>
+</html>
