@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <title>Applications</title>
+  <script>
+    const URL = 'https://s3.amazonaws.com/fortios-hiring/applications.json';
+    // Add your javascript here
+
+    window.onload = () => {
+      // const outdiv = document.querySelector("#debugdiv");
+      const container = document.querySelector("#container");
+      fetch(URL).then(res => res.json()).then(res => {
+        // document.body.innerHTML = JSON.stringify( res );
+        res.filter( item => 
+          item.popularity === 5 && 
+          item.risk <= 2
+        ).slice(0, 20).map( (item, index) => {
+          const box = document.createElement("div");
+          box.innerHTML = `name: ${item.name}, id: ${item.id}`;
+          const id = `apps_${item.id}`;
+          box.id = id;
+          box.onclick = () => {
+            const node = document.querySelector(`#${id}`);
+            node.remove();
+          }
+          container.appendChild(box);
+        });
+      })
+    }
+
+  </script>
+  <style>
+    #container {
+      display: flex;
+      flex-flow: wrap;
+    }
+    #container > div {
+      min-width: 300px;
+      max-width: 300px;
+      border: 1px solid gray;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    #container > div:hover {
+      background-color: gray; 
+      cursor: pointer;
+    }
+  </style>
+  	<!-- Javascript/CSS from other tabs will be automatically included -->
+</head>
+<body>
+  <!-- Enter your HTML code here -->
+  <div id="container">  
+  </div>
+  <div id="debugdiv">
+  </div>
+</body>
+</html>
