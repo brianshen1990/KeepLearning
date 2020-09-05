@@ -21,12 +21,22 @@ Output: True
 Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
  */
 
+ /**
+ * @param {string} s
+ * @return {boolean}
+ */
+var repeatedSubstringPattern = function(s) {
+    if ( s.length <= 1) {
+        return false
+    } 
+    return (s + s).substr( 1, s.length*2-2 ).indexOf(s) >= 0;
+};
 
 /**
  * @param {string} s
  * @return {boolean}
  */
-var repeatedSubstringPattern = function(s) {
+var repeatedSubstringPattern_V1 = function(s) {
     if ( s.length === 0 ) {
         return false;
     }
@@ -67,4 +77,14 @@ var repeatedSubstringPattern = function(s) {
 "b"
 "bbb"
 "abacababacab"
+"abab"
+"aba"
+"abcabcabcabc"
+"ababc"
+"a"
+"aa"
+"aaaa"
+"aaabbb"
+"aaabbbaaabbb"
+"aabbbaaabbb"
  */
