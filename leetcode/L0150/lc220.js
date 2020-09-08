@@ -17,13 +17,42 @@ Input: nums = [1,5,9,1,5,9], k = 2, t = 3
 Output: false
 */
 
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @param {number} t
+ * @return {boolean}
+ * Bucket SOrt O(N)
+ */
+var containsNearbyAlmostDuplicate = function(nums, k, t) {
+    // bucket sort, only keep the latest elem
+    const cache = {};
+    
+    for ( let i = 0 ; i < nums.length ; i++ ) {
+        let bucket = t <= 0 ? nums[i] : Math.floor(nums[i]/t);
+        let offset = t <= 0 ? 0 : 1;
+        
+        for ( let j = bucket-offset; j <= bucket+offset ; j++ ) {
+            if ( j in cache && 
+                i - cache[j].pos <= k && 
+                Math.abs(nums[i]-cache[j].val) <= t ) {
+                return true;
+            }
+        }
+        cache[bucket] = { val: nums[i], pos: i };
+    }
+    return false
+};
+
 /**
  * @param {number[]} nums
  * @param {number} k
  * @param {number} t
  * @return {boolean}
  */
-var containsNearbyAlmostDuplicate = function(nums, k, t) {
+var containsNearbyAlmostDuplicateOld = function(nums, k, t) {
     let found = false;
     for ( let i = 0 ; i < nums.length - 1 ; i++ ) {
         const maxLen = Math.min( nums.length-1, i+k );
