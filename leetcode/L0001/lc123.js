@@ -28,6 +28,38 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 */
 
+
+/**
+ * @param {number} k
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit_MatrixDP = function( prices) {
+    const matrix = [];
+    for ( let i = 0 ; i <= 2 ; i++ ) {
+        matrix.push( new Array( prices.length ).fill(0) )
+    }
+    
+    for ( let i = 1 ; i <= 2 ; i++ ) {
+        
+        // matrix[i][j] means <= i trades at time j, maxmium value
+        // 1, do nothing, matrix[i][j] = matrix[i][j-1]
+        // 2, sell at j, so must buy at t( [0-j] )
+        //      => prices[j] - prices[t] + matrix[i-1][t-1]
+        //      => prices[j] + ( matrix[i-1][t-1] - prices[t] )
+        
+        let tempMax = matrix[i-1][0] - prices[0];
+        for ( let j = 1 ; j < prices.length ; j++ ) {
+            matrix[i][j]  = Math.max( matrix[i][j-1], prices[j] + tempMax );
+            tempMax = Math.max( tempMax, matrix[i-1][j-1] - prices[j] );
+        }
+    }
+    // console.log( matrix )
+    
+    return matrix[2][prices.length-1];
+    
+};
+
 /**
  * @param {number[]} prices
  * @return {number}

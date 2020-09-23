@@ -23,6 +23,51 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
 
  */
 
+
+/**
+ * @param {number} k
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfitMatrixDP = function(k, prices) {
+    
+    if ( k * 2 >= prices.length ) {
+        // try to sell every time because 
+        // K is enough for use to operate every time 
+        let ret = 0 ;
+        for ( let i = 1 ; i < prices.length ; i++ ) {
+            if ( prices[i] > prices[i-1] ) ret += ( prices[i] - prices[i-1] ) ;
+        }
+        return ret;
+    }
+
+    // DP init matrix[i][j] -> with <= i trades and j time stock, max  
+    const matrix = [];
+    for ( let i = 0 ; i <= k ; i++ ) {
+        const tempArr = new Array( prices.length ).fill( 0 );
+        matrix.push( tempArr ); 
+    }
+    
+    // GO DP
+    for ( let i = 1 ; i <= k ; i++ ) {
+        let tempMax = matrix[i][0] - prices[0];
+        
+        for ( let j = 1 ; j < prices.length ; j++ ) {
+            // 1, do nothing (or buy) => matrix[i][j-1]
+            // 2, sell ( in order to sell, must buy at t )  )
+            //     (prices[j] - price[t]) + matrix[i-1][j-1] 
+            //     => prices[j] + ( matrix[i-1][j-1] - price[t] )
+            //     => prices[j] + ( tempMax )
+            matrix[i][j] = Math.max( matrix[i][j-1], prices[j] + tempMax )
+            tempMax = Math.max( tempMax, matrix[i-1][j-1] - prices[j] ); // for next use 
+        }
+    }
+    
+    return matrix[k][prices.length-1];
+    
+};
+
+
 /**
  * @param {number} k
  * @param {number[]} prices
