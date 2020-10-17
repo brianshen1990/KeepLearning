@@ -8,3 +8,4 @@ Elm/index.html
 Elm/elm.js
 Java/*.class
 **/__pycache__/*.pyc
+.DS_Store
