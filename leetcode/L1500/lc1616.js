@@ -1,122 +1,55 @@
 /**
 
-1616. Split Two Strings to Make Palindrome
+1637. Widest Vertical Area Between Two Points Containing No Points
 
-You are given two strings a and b of the same length. Choose an index and split both strings at the same index, splitting a into two strings: aprefix and asuffix where a = aprefix + asuffix, and splitting b into two strings: bprefix and bsuffix where b = bprefix + bsuffix. Check if aprefix + bsuffix or bprefix + asuffix forms a palindrome.
+Given n points on a 2D plane where points[i] = [xi, yi], Return the widest vertical area between two points such that no points are inside the area.
 
-When you split a string s into sprefix and ssuffix, either ssuffix or sprefix is allowed to be empty. For example, if s = "abc", then "" + "abc", "a" + "bc", "ab" + "c" , and "abc" + "" are valid splits.
+A vertical area is an area of fixed-width extending infinitely along the y-axis (i.e., infinite height). The widest vertical area is the one with the maximum width.
 
-Return true if it is possible to form a palindrome string, otherwise return false.
-
-Notice that x + y denotes the concatenation of strings x and y.
+Note that points on the edge of a vertical area are not considered included in the area.
 
  
 
 Example 1:
 
-Input: a = "x", b = "y"
-Output: true
-Explaination: If either a or b are palindromes the answer is true since you can split in the following way:
-aprefix = "", asuffix = "x"
-bprefix = "", bsuffix = "y"
-Then, aprefix + bsuffix = "" + "y" = "y", which is a palindrome.
+​
+Input: points = [[8,7],[9,9],[7,4],[9,7]]
+Output: 1
+Explanation: Both the red and the blue area are optimal.
 Example 2:
 
-Input: a = "abdef", b = "fecab"
-Output: true
-Example 3:
-
-Input: a = "ulacfd", b = "jizalu"
-Output: true
-Explaination: Split them at index 3:
-aprefix = "ula", asuffix = "cfd"
-bprefix = "jiz", bsuffix = "alu"
-Then, aprefix + bsuffix = "ula" + "alu" = "ulaalu", which is a palindrome.
-Example 4:
-
-Input: a = "xbdef", b = "xecab"
-Output: false
+Input: points = [[3,1],[9,0],[1,0],[1,4],[5,3],[8,8]]
+Output: 3
  
 
 Constraints:
 
-1 <= a.length, b.length <= 105
-a.length == b.length
-a and b consist of lowercase English letters
+n == points.length
+2 <= n <= 105
+points[i].length == 2
+0 <= xi, yi <= 109
  */
 
 
 /**
- * @param {string} a
- * @param {string} b
- * @return {boolean}
+ * @param {number[][]} points
+ * @return {number}
  */
-var checkPalindromeFormation = function(a, b) {
-    const pal = (str) => {
-        return str.split("").reverse().join("") === str;
-    }
-    if ( pal(a) || pal(b) ) {
-        return true;
-    } 
-    // need combine 
-    // a pre + b suff
-    let beg = 0 ; 
-    let end = b.length-1;
-    while ( beg < end ) {
-        if ( a[beg] === b[end] ) {
-            beg++;
-            end--;
-        } else {
-            // can take all a beg or take all b end
-            // console.log( "a pre + b suff" )
-            if ( pal( a.substring(beg, end+1) ) || pal( b.substring( beg, end+1 ) ) ) {
-                return true;
-            } else {
-                break;
-            }
-        }
-    }
-    if ( beg >= end ) {
-        return true;
-    }
+ var maxWidthOfVerticalArea = function(points) {
+    points = [... new Set(points.map(item => item[0]))].sort( (a,b) => a-b );
+    // console.log(points);
     
-    // b pre + a suff 
-    beg = 0;
-    end = b.length-1;
-    while ( beg < end ) {
-        if ( a[end] === b[beg] ) {
-            beg++;
-            end--;
-        } else {
-            // can take all a beg or take all b end
-            // console.log( "b pre + a suff" )
-            if ( pal( a.substring(beg, end+1) ) || pal( b.substring( beg, end+1 ) ) ) {
-                return true;
-            } else {
-                break;
-            }
-        }
+    let max = 0;
+    for ( let i = 1 ; i < points.length ; i++ ) {
+        max = Math.max( max, points[i] - points[i-1] );
     }
-    if ( a[beg] === b[end] || beg + 1 === end) {
-        return true;
-    }
-    if ( beg >= end ) {
-        return true;
-    }
-
-    return false;
+    return max;
     
 };
 
 
 /**
-"x"
-"y"
-"abdef"
-"fecab"
-"ulacfd"
-"jizalu"
-"xbdef"
-"xecab"
-
+[[8,7],[9,9],[7,4],[9,7]]
+[[3,1],[9,0],[1,0],[1,4],[5,3],[8,8]]
+[[1,1],[1,1]]
 */

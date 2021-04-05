@@ -1,53 +1,75 @@
 /**
-1732. Find the Highest Altitude
+1768. Merge Strings Alternately
 
-There is a biker going on a road trip. The road trip consists of n + 1 points at different altitudes. The biker starts his trip on point 0 with altitude equal 0.
+You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. If a string is longer than the other, append the additional letters onto the end of the merged string.
 
-You are given an integer array gain of length n where gain[i] is the net gain in altitude between points i​​​​​​ and i + 1 for all (0 <= i < n). Return the highest altitude of a point.
+Return the merged string.
 
  
 
 Example 1:
 
-Input: gain = [-5,1,5,0,-7]
-Output: 1
-Explanation: The altitudes are [0,-5,-4,1,1,-6]. The highest is 1.
+Input: word1 = "abc", word2 = "pqr"
+Output: "apbqcr"
+Explanation: The merged string will be merged as so:
+word1:  a   b   c
+word2:    p   q   r
+merged: a p b q c r
 Example 2:
 
-Input: gain = [-4,-3,-2,-1,4,3,2]
-Output: 0
-Explanation: The altitudes are [0,-4,-7,-9,-10,-6,-3,-1]. The highest is 0.
+Input: word1 = "ab", word2 = "pqrs"
+Output: "apbqrs"
+Explanation: Notice that as word2 is longer, "rs" is appended to the end.
+word1:  a   b 
+word2:    p   q   r   s
+merged: a p b q   r   s
+Example 3:
+
+Input: word1 = "abcd", word2 = "pq"
+Output: "apbqcd"
+Explanation: Notice that as word1 is longer, "cd" is appended to the end.
+word1:  a   b   c   d
+word2:    p   q 
+merged: a p b q c   d
  
 
 Constraints:
 
-n == gain.length
-1 <= n <= 100
--100 <= gain[i] <= 100
+1 <= word1.length, word2.length <= 100
+word1 and word2 consist of lowercase English letters.
 
 */
 
 /**
- * @param {number[]} gain
- * @return {number}
+ * @param {string} word1
+ * @param {string} word2
+ * @return {string}
  */
- var largestAltitude = function(gain) {
-    let max = 0;
-    let base = 0;
-    gain.forEach( item => {
-        base = base + item;
-        max = Math.max( max, base );
-    })
-    
-    return max;
-    
+ var mergeAlternately = function(word1, word2) {
+    let index = 0;
+    let ret = "";
+    while (index < word1.length && index < word2.length ) {
+         ret += word1[index];
+        ret += word2[index];
+        index++;
+}
+    while (index < word1.length) {
+        ret += word1[index];
+        index++;
+    }
+    while (index < word2.length) {
+        ret += word2[index];
+        index++;
+}
+    return ret;
+
 };
 
-
 /* 
-[-5,1,5,0,-7]
-[-4,-3,-2,-1,4,3,2]
-[1]
-[0]
-[-1]
+"abc"
+"pqr"
+"ab"
+"pqrs"
+"abcd"
+"pq"
 */
