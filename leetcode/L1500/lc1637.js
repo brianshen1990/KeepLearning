@@ -1,122 +1,74 @@
 /**
 
-1616. Split Two Strings to Make Palindrome
+1641. Count Sorted Vowel Strings
 
-You are given two strings a and b of the same length. Choose an index and split both strings at the same index, splitting a into two strings: aprefix and asuffix where a = aprefix + asuffix, and splitting b into two strings: bprefix and bsuffix where b = bprefix + bsuffix. Check if aprefix + bsuffix or bprefix + asuffix forms a palindrome.
+Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
 
-When you split a string s into sprefix and ssuffix, either ssuffix or sprefix is allowed to be empty. For example, if s = "abc", then "" + "abc", "a" + "bc", "ab" + "c" , and "abc" + "" are valid splits.
-
-Return true if it is possible to form a palindrome string, otherwise return false.
-
-Notice that x + y denotes the concatenation of strings x and y.
+A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.
 
  
 
 Example 1:
 
-Input: a = "x", b = "y"
-Output: true
-Explaination: If either a or b are palindromes the answer is true since you can split in the following way:
-aprefix = "", asuffix = "x"
-bprefix = "", bsuffix = "y"
-Then, aprefix + bsuffix = "" + "y" = "y", which is a palindrome.
+Input: n = 1
+Output: 5
+Explanation: The 5 sorted strings that consist of vowels only are ["a","e","i","o","u"].
 Example 2:
 
-Input: a = "abdef", b = "fecab"
-Output: true
+Input: n = 2
+Output: 15
+Explanation: The 15 sorted strings that consist of vowels only are
+["aa","ae","ai","ao","au","ee","ei","eo","eu","ii","io","iu","oo","ou","uu"].
+Note that "ea" is not a valid string since 'e' comes after 'a' in the alphabet.
 Example 3:
 
-Input: a = "ulacfd", b = "jizalu"
-Output: true
-Explaination: Split them at index 3:
-aprefix = "ula", asuffix = "cfd"
-bprefix = "jiz", bsuffix = "alu"
-Then, aprefix + bsuffix = "ula" + "alu" = "ulaalu", which is a palindrome.
-Example 4:
-
-Input: a = "xbdef", b = "xecab"
-Output: false
+Input: n = 33
+Output: 66045
  
 
 Constraints:
 
-1 <= a.length, b.length <= 105
-a.length == b.length
-a and b consist of lowercase English letters
+1 <= n <= 50 
+
  */
 
 
 /**
- * @param {string} a
- * @param {string} b
- * @return {boolean}
+ * @param {number} n
+ * @return {number}
  */
-var checkPalindromeFormation = function(a, b) {
-    const pal = (str) => {
-        return str.split("").reverse().join("") === str;
-    }
-    if ( pal(a) || pal(b) ) {
-        return true;
-    } 
-    // need combine 
-    // a pre + b suff
-    let beg = 0 ; 
-    let end = b.length-1;
-    while ( beg < end ) {
-        if ( a[beg] === b[end] ) {
-            beg++;
-            end--;
-        } else {
-            // can take all a beg or take all b end
-            // console.log( "a pre + b suff" )
-            if ( pal( a.substring(beg, end+1) ) || pal( b.substring( beg, end+1 ) ) ) {
-                return true;
-            } else {
-                break;
-            }
+ var countVowelStrings = function(n) {
+    const cache = {};
+
+    const helper = ( arr, len ) => {
+        if ( len === 0 || arr.length === 0 ) return 0;
+        if ( arr.length === 1 ) return 1;
+        if ( len === 1 ) return arr.length;
+        
+        const str = arr.join("") + len.toString();
+        if ( str in cache ) {
+            return cache[str];
         }
-    }
-    if ( beg >= end ) {
-        return true;
+        let count = 1;// take all teh same
+        const nextArr = arr.slice(1);
+        for ( let i = 0 ; i < len ; i++ ) {
+            count += helper( nextArr, len-i );
+        }
+        cache[str] = count;
+        return count;
     }
     
-    // b pre + a suff 
-    beg = 0;
-    end = b.length-1;
-    while ( beg < end ) {
-        if ( a[end] === b[beg] ) {
-            beg++;
-            end--;
-        } else {
-            // can take all a beg or take all b end
-            // console.log( "b pre + a suff" )
-            if ( pal( a.substring(beg, end+1) ) || pal( b.substring( beg, end+1 ) ) ) {
-                return true;
-            } else {
-                break;
-            }
-        }
-    }
-    if ( a[beg] === b[end] || beg + 1 === end) {
-        return true;
-    }
-    if ( beg >= end ) {
-        return true;
-    }
-
-    return false;
+    return helper( ["a", "e", "i", "o", "u"], n );
     
 };
 
 
 /**
-"x"
-"y"
-"abdef"
-"fecab"
-"ulacfd"
-"jizalu"
-"xbdef"
-"xecab"
-
+1
+2
+9
+10
+33
+42
+50
 */
