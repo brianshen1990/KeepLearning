@@ -28,74 +28,41 @@ You may assume that row1 ≤ row2 and col1 ≤ col2.
 /**
  * @param {number[][]} matrix
  */
-var NumMatrix = function(matrix) {
+ var NumMatrix = function(matrix) {
+    const matrixSum = [];
+    for ( let i = 0 ; i <= matrix.length ; i++ ) {
+        matrixSum.push( new Array(matrix[0].length + 1).fill(0) );
+    }
     
-  if (matrix && matrix.length > 0 && matrix[0].length > 0) {
-      // pass
-  } else {
-      this.empty = true;
-      return;
-  }
-  this.empty = false;
-  const dpMatrix = [];
-  for ( let i = 0 ; i <= matrix.length ; i++) {
-      const temp = [];
-      for (let j = 0; j <= matrix[0].length ; j++) {
-          temp.push(0);
-      }
-      dpMatrix.push(temp);
-  }
-  
-  // init , state = sum[i][j]
-  let temp = 0;
-  for ( let i = 0 ; i < matrix[0].length ; i++) {
-      temp += matrix[0][i];
-      dpMatrix[1][i+1] = temp;
-  }
-  temp = matrix[0][0];
-  for ( let i = 1; i < matrix.length ; i++ ) {
-      temp += matrix[i][0];
-      dpMatrix[i+1][1] = temp;
-  }
-  console.log( dpMatrix );
-  
-  // go dp
-  for ( let i = 1; i < matrix.length ; i++ ) {
-      for ( let j = 1; j < matrix[0].length ; j++ ) {
-          const temp = dpMatrix[i+1][j] + matrix[i][j] +
-                  ( dpMatrix[i][j+1] -dpMatrix[i][j] );
-          dpMatrix[i+1][j+1] = temp;
-      }
-  }
-  // console.log( dpMatrix );    
-  this.dpMatrix = dpMatrix;
+    for ( let i = 1 ; i <= matrix.length ; i++ ) {
+        for ( let j = 1 ; j <= matrix[0].length ; j++ ) {
+           matrixSum[i][j] = matrix[i-1][j-1] +  matrixSum[i-1][j] + matrixSum[i][j-1] - matrixSum[i-1][j-1];
+        }
+    }
+    // console.log( matrixSum );
+    this.matrixSum = matrixSum;
 };
 
 /** 
-* @param {number} row1 
-* @param {number} col1 
-* @param {number} row2 
-* @param {number} col2
-* @return {number}
-*/
+ * @param {number} row1 
+ * @param {number} col1 
+ * @param {number} row2 
+ * @param {number} col2
+ * @return {number}
+ */
 NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
-  if (this.empty) {
-      return 0;
-  }
-  let res = this.dpMatrix[row2+1][col2+1];
-  if ( col1 > 0  && row1 > 0) {
-      res = res - this.dpMatrix[row2+1][col1];
-      res = res - this.dpMatrix[row1][col2+1];
-      res = res + this.dpMatrix[row1][col1];
-  } else if ( row1 > 0 ) {
-      // col1 = 0
-      res = res - this.dpMatrix[row1][col2+1];
-  } else if ( col1 > 0 ) {
-      // row1 = 0
-      res = res - this.dpMatrix[row2+1][col1];
-  } 
-  return res;
+    const matrixSum = this.matrixSum;
+    row2++;
+    col2++;
+    // console.log( matrixSum[row2][col2] , matrixSum[row2][col1] , matrixSum[row1][col2] , matrixSum[row1][col1] )
+    return matrixSum[row2][col2] - matrixSum[row2][col1]  - matrixSum[row1][col2] +   matrixSum[row1][col1];
 };
+
+/** 
+ * Your NumMatrix object will be instantiated and called as such:
+ * var obj = new NumMatrix(matrix)
+ * var param_1 = obj.sumRegion(row1,col1,row2,col2)
+ */
 
 /** 
 * Your NumMatrix object will be instantiated and called as such:
@@ -109,6 +76,6 @@ NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
 [[[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]],[2,1,4,3],[1,1,2,2],[1,2,2,4],[1,1,1,1], [2,2,2,2]]
 ["NumMatrix","sumRegion","sumRegion"]
 [[[[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5],[4,1,0,1,7],[1,0,3,0,5]]],[1,1,1,4], [1,1,4,1]]
-["NumMatrix"]
-[[[]]]
+["NumMatrix","sumRegion"]
+[[[[-1]]],[0,0,0,0]]
  */

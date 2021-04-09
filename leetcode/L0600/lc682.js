@@ -1,81 +1,82 @@
 /**
-682. Baseball Game
+684. Redundant Connection
 
-You are keeping score for a baseball game with strange rules. The game consists of several rounds, where the scores of past rounds may affect future rounds' scores.
+In this problem, a tree is an undirected graph that is connected and has no cycles.
 
-At the beginning of the game, you start with an empty record. You are given a list of strings ops, where ops[i] is the ith operation you must apply to the record and is one of the following:
+The given input is a graph that started as a tree with N nodes (with distinct values 1, 2, ..., N), with one additional edge added. The added edge has two different vertices chosen from 1 to N, and was not an edge that already existed.
 
-An integer x - Record a new score of x.
-"+" - Record a new score that is the sum of the previous two scores. It is guaranteed there will always be two previous scores.
-"D" - Record a new score that is double the previous score. It is guaranteed there will always be a previous score.
-"C" - Invalidate the previous score, removing it from the record. It is guaranteed there will always be a previous score.
-Return the sum of all the scores on the record.
+The resulting graph is given as a 2D-array of edges. Each element of edges is a pair [u, v] with u < v, that represents an undirected edge connecting nodes u and v.
 
- 
+Return an edge that can be removed so that the resulting graph is a tree of N nodes. If there are multiple answers, return the answer that occurs last in the given 2D-array. The answer edge [u, v] should be in the same format, with u < v.
 
 Example 1:
-
-Input: ops = ["5","2","C","D","+"]
-Output: 30
-Explanation:
-"5" - Add 5 to the record, record is now [5].
-"2" - Add 2 to the record, record is now [5, 2].
-"C" - Invalidate and remove the previous score, record is now [5].
-"D" - Add 2 * 5 = 10 to the record, record is now [5, 10].
-"+" - Add 5 + 10 = 15 to the record, record is now [5, 10, 15].
-The total sum is 5 + 10 + 15 = 30.
+Input: [[1,2], [1,3], [2,3]]
+Output: [2,3]
+Explanation: The given undirected graph will be like this:
+  1
+ / \
+2 - 3
 Example 2:
+Input: [[1,2], [2,3], [3,4], [1,4], [1,5]]
+Output: [1,4]
+Explanation: The given undirected graph will be like this:
+5 - 1 - 2
+    |   |
+    4 - 3
+Note:
+The size of the input 2D-array will be between 3 and 1000.
+Every integer represented in the 2D-array will be between 1 and N, where N is the size of the input array.
 
-Input: ops = ["5","-2","4","C","D","9","+","+"]
-Output: 27
-Explanation:
-"5" - Add 5 to the record, record is now [5].
-"-2" - Add -2 to the record, record is now [5, -2].
-"4" - Add 4 to the record, record is now [5, -2, 4].
-"C" - Invalidate and remove the previous score, record is now [5, -2].
-"D" - Add 2 * -2 = -4 to the record, record is now [5, -2, -4].
-"9" - Add 9 to the record, record is now [5, -2, -4, 9].
-"+" - Add -4 + 9 = 5 to the record, record is now [5, -2, -4, 9, 5].
-"+" - Add 9 + 5 = 14 to the record, record is now [5, -2, -4, 9, 5, 14].
-The total sum is 5 + -2 + -4 + 9 + 5 + 14 = 27.
-Example 3:
+Update (2017-09-26):
+We have overhauled the problem description + test cases and specified clearly the graph is an undirected graph. For the directed graph follow up please see Redundant Connection II). We apologize for any inconvenience caused.
 
-Input: ops = ["1"]
-Output: 1
- 
-
-Constraints:
-
-1 <= ops.length <= 1000
-ops[i] is "C", "D", "+", or a string representing an integer in the range [-3 * 104, 3 * 104].
-For operation "+", there will always be at least two previous scores on the record.
-For operations "C" and "D", there will always be at least one previous score on the record.
  */
 
 
 /**
- * @param {string[]} ops
- * @return {number}
+ * @param {number[][]} edges
+ * @return {number[]}
  */
-var calPoints = function(ops) {
-    const ret = [];
-    ops.forEach( item => {
-        if ( item === '+' ) {
-            ret.push( ret[ret.length-1] + ret[ret.length-2] );
-        } else if ( item === 'C' ) {
-            ret.pop();
-        } else if ( item === 'D' ) {
-            ret.push( ret[ret.length-1] * 2 )
-        } else {
-            ret.push( parseInt(item) );
-        }
+ var findRedundantConnection = function(edges) { 
+    const cache = {};
+    for ( let i = 1 ; i <= edges.length ; i++ ) {
+        cache[i] = new Set();
+    }
+    edges.forEach( (item) => {
+        const [u, v] = item;
+        cache[u].add(v);
+        cache[v].add(u);
     });
-    return ret.reduce( (acc, cur) => acc+cur, 0 );
+    
+    // remove nodes that only has a node
+    let next = Object.keys(cache).filter( item => cache[item].size === 1 );
+    while ( next.length > 0 ) {
+        // console.log(next);
+        // console.log( cache );
+        next.forEach( item => {
+            item = parseInt(item);
+            const nn = [...cache[item]][0];
+            cache[nn].delete(item);
+            delete cache[item];
+        })
+        // console.log( cache );
+        next = Object.keys(cache).filter( item => cache[item].size === 1 );
+    }
+    
+    let inTheCircle = new Set(Object.values(cache).map( item => [...item] ).flat());
+    
+    for ( let i = edges.length-1 ; i > 0 ; i-- ) {
+        if ( inTheCircle.has(edges[i][0]) && inTheCircle.has(edges[i][1]) ) {
+            return edges[i];
+        }
+    }
 };
 
 
 /**
-["5","2","C","D","+"]
-["5","-2","4","C","D","9","+","+"]
-["1"]
+[[9,10],[5,8],[2,6],[1,5],[3,8],[4,9],[8,10],[4,10],[6,8],[7,9]]
+[[1,2],[1,3],[2,3]]
+[[1,2], [2,3], [3,4], [1,4], [1,5]]
+[[1,2], [2,3], [3,4], [1,3], [1,5]]
+[[1,2], [2,3], [3,4], [4,5], [1,5]]
 */
