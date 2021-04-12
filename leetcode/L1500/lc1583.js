@@ -1,77 +1,121 @@
 /**
 
-1578. Minimum Deletion Cost to Avoid Repeating Letters
+1583. Count Unhappy Friends
 
-Given a string s and an array of integers cost where cost[i] is the cost of deleting the character i in s.
+You are given a list of preferences for n friends, where n is always even.
 
-Return the minimum cost of deletions such that there are no two identical letters next to each other.
+For each person i, preferences[i] contains a list of friends sorted in the order of preference. In other words, a friend earlier in the list is more preferred than a friend later in the list. Friends in each list are denoted by integers from 0 to n-1.
 
-Notice that you will delete the chosen characters at the same time, in other words, after deleting a character, the costs of deleting other characters will not change.
+All the friends are divided into pairs. The pairings are given in a list pairs, where pairs[i] = [xi, yi] denotes xi is paired with yi and yi is paired with xi.
+
+However, this pairing may cause some of the friends to be unhappy. A friend x is unhappy if x is paired with y and there exists a friend u who is paired with v but:
+
+x prefers u over y, and
+u prefers x over v.
+Return the number of unhappy friends.
 
  
 
 Example 1:
 
-Input: s = "abaac", cost = [1,2,3,4,5]
-Output: 3
-Explanation: Delete the letter "a" with cost 3 to get "abac" (String without two identical letters next to each other).
+Input: n = 4, preferences = [[1, 2, 3], [3, 2, 0], [3, 1, 0], [1, 2, 0]], pairs = [[0, 1], [2, 3]]
+Output: 2
+Explanation:
+Friend 1 is unhappy because:
+- 1 is paired with 0 but prefers 3 over 0, and
+- 3 prefers 1 over 2.
+Friend 3 is unhappy because:
+- 3 is paired with 2 but prefers 1 over 2, and
+- 1 prefers 3 over 0.
+Friends 0 and 2 are happy.
 Example 2:
 
-Input: s = "abc", cost = [1,2,3]
+Input: n = 2, preferences = [[1], [0]], pairs = [[1, 0]]
 Output: 0
-Explanation: You don't need to delete any character because there are no identical letters next to each other.
+Explanation: Both friends 0 and 1 are happy.
 Example 3:
 
-Input: s = "aabaa", cost = [1,2,3,4,1]
-Output: 2
-Explanation: Delete the first and the last character, getting the string ("aba").
+Input: n = 4, preferences = [[1, 3, 2], [2, 3, 0], [1, 3, 0], [0, 2, 1]], pairs = [[1, 3], [0, 2]]
+Output: 4
  
 
 Constraints:
 
-s.length == cost.length
-1 <= s.length, cost.length <= 10^5
-1 <= cost[i] <= 10^4
-s contains only lowercase English letters.
+2 <= n <= 500
+n is even.
+preferences.length == n
+preferences[i].length == n - 1
+0 <= preferences[i][j] <= n - 1
+preferences[i] does not contain i.
+All values in preferences[i] are unique.
+pairs.length == n/2
+pairs[i].length == 2
+xi != yi
+0 <= xi, yi <= n - 1
+Each person is contained in exactly one pair.
 
  */
 
 
 /**
- * @param {string} s
- * @param {number[]} cost
+ * @param {number} n
+ * @param {number[][]} preferences
+ * @param {number[][]} pairs
  * @return {number}
  */
-var minCost = function(s, cost) {
-    let ret = 0 ;
-    let index = 1;
-    while ( index < s.length ) {
-        if ( s[index] === s[index-1] ) {
-            // console.log("hit", index-1, s[index-1])
-            let nextIndex = index-1;
-            let sum = 0;
-            let max = 0;
-            while ( nextIndex < s.length && s[nextIndex] === s[index-1] ) {
-                sum += cost[nextIndex];
-                max = Math.max( max, cost[nextIndex] );
-                nextIndex++;
+ var unhappyFriends = function(n, preferences, pairs) {
+    let count = 0 ;
+    const cache = {};
+    pairs.forEach( item => {
+        const [x, y] = item; 
+        cache[x] = y;
+        cache[y] = x;
+    });
+    
+    pairs.forEach( item => {
+        [[item[0], item[1]], [item[1], item[0]]].forEach( p => {
+            const [x, y] = p;   
+
+            let unhappy = false;
+            for ( let i = 0 ; i < preferences[x].length ; i++ ) {
+                if ( y === preferences[x][i] ) {
+                    break;
+                }
+
+                const u =  preferences[x][i];
+                const v = cache[u];
+
+                for ( let j = 0 ; j < preferences[u].length ; j++ ) {
+                    if ( v === preferences[u][j] ) {
+                        break;
+                    }
+                    if ( x === preferences[u][j] ) {
+                        unhappy = true;
+                        // console.log( x, y , u, v);
+                        break;
+                    }
+                }
+                if ( unhappy ) break;
             }
-            // console.log("hit", sum, max)
-            ret += sum-max;
-            index = nextIndex;
-        } else {
-            index++;
-        }
-    }
-    return ret;
+            if ( unhappy ) {
+                count++;
+            }
+        });
+    });
+    
+    return count;
+
 };
 
-/**
-"abaac"
-[1,2,3,4,5]
-"abc"
-[1,2,3]
-"aabaa"
-[1,2,3,4,1]
 
+/**
+4
+[[1,2,3],[3,2,0],[3,1,0],[1,2,0]]
+[[0,1],[2,3]]
+2
+[[1],[0]]
+[[1,0]]
+4
+[[1,3,2],[2,3,0],[1,3,0],[0,2,1]]
+[[1,3],[0,2]]
  */
