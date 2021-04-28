@@ -141,7 +141,32 @@ var numDecodings = function(s) {
 };
 
 
-
+/**
+ * @param {string} s
+ * @return {number}
+ */
+ var numDecodingsDP = function(s) {
+    
+    if ( s[0] === '0' ) {
+        return 0;
+    }
+    
+    const setCache = new Set( new Array(26).fill(0).map( (_, index) => `${index+1}` ) );
+    // console.log(setCache);
+    
+    const arr = new Array(s.length).fill(0);
+    arr[0] = 1;
+    for ( let i = 1; i < s.length ; i++ ) {
+        if ( setCache.has(s[i]) ) {
+            arr[i] += arr[i-1];
+        }
+        if ( setCache.has(`${s[i-1]}${s[i]}`) ) {
+            arr[i] += ( i >= 2 ? arr[i-2] : 1 ) ;
+        }
+    }
+    // console.log(arr);
+    return arr[arr.length-1];
+};
 
 
 
