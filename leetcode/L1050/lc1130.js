@@ -35,7 +35,7 @@ It is guaranteed that the answer fits into a 32-bit signed integer (ie. it is le
  * @param {number[]} arr
  * @return {number}
  */
- var mctFromLeafValues = function(aArr) {
+ var mctFromLeafValuesDP = function(aArr) {
     
     const cacheMax = {};
     const helperMax = (start, end) => {
@@ -62,6 +62,72 @@ It is guaranteed that the answer fits into a 32-bit signed integer (ie. it is le
     }
     
     return helperDP(0, aArr.length);
+};
+
+
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+ var mctFromLeafValuesCompare = function(aArr) {
+    
+    // to remove a element in arr, it costs min[left, right] * element
+    // every element needs to be removed
+    // so remove from the smallest one to biggest one
+    
+    let sum = 0 ;
+    while ( aArr.length > 1 ) {
+        let toRemove = Math.min( ...aArr );
+        let toRemoveIndex = aArr.indexOf(toRemove);
+        let smallerNeigbour = Number.MAX_VALUE;
+        if ( toRemoveIndex > 0 ) {
+            smallerNeigbour = Math.min(smallerNeigbour, aArr[toRemoveIndex-1]);
+        }
+        if ( toRemoveIndex < aArr.length-1 ) {
+            smallerNeigbour = Math.min(smallerNeigbour, aArr[toRemoveIndex+1]);
+        }
+        sum += smallerNeigbour * toRemove;
+        aArr.splice(toRemoveIndex, 1);
+    }
+    
+    return sum;
+    
+};
+
+
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+ var mctFromLeafValuesStack = function(aArr) {
+    
+    // to remove a element in arr, it costs min[left, right] * element
+    // every element needs to be removed
+    // so remove from the smallest one to biggest one
+    // => so we use a stack
+    
+    let sum = 0 ;
+    let stack = [];
+    stack.push( aArr.pop() );
+    while ( aArr.length > 0 ) {
+        while ( stack.length > 0 && aArr[aArr.length-1] >= stack[stack.length-1] ) {
+            let toRemove = stack.pop();
+            let smallerNeibour = aArr[aArr.length-1];
+            if ( stack.length > 0 ) {
+                smallerNeibour = Math.min(smallerNeibour,  stack[stack.length-1]);
+            }
+            sum += smallerNeibour * toRemove;
+        }
+        stack.push( aArr.pop() );
+    }
+    // stack would be descending, remove from end
+    while ( stack.length > 1 ) {
+        sum += stack[stack.length-1] * stack[stack.length-2];
+        stack.pop();
+    }
+    
+    return sum;
+    
 };
 
 /**
