@@ -27,39 +27,41 @@ Answers within 10^-6 of the correct answer will be accepted as correct.
  */
 
 /**
- * @param {number[]} A
- * @param {number} K
+ * @param {number[]} nums
+ * @param {number} k
  * @return {number}
  */
-var largestSumOfAverages = function(A, K) {
+ var largestSumOfAverages = function(nums, k) {
     
+    const sumArr = new Array(nums.length+1).fill(0);
+    for ( let i = 1 ; i <= nums.length; i++ ) {
+        sumArr[i] = sumArr[i-1] + nums[i-1];
+    }
+    // console.log(sumArr);
     
     const cache = {};
-    
-    const helper = ( beg, end, num ) => {
-        const str = `${beg}_${end}_${num}`;
-       
+    const helper = ( start, end, leftK ) => {
+        
+        const str = `${start}_${end}_${leftK}`;
         if ( str in cache ) return cache[str];
         
-        if ( num === 1 ) {
-            cache[str] = A.slice(beg, end).reduce( (acc, ele) => acc + ele, 0) / ( end - beg);
-            // console.log( str, "=>" , cache[str] );
-            return cache[str];
+        let temp = 0;
+        if ( leftK === 1 ) {
+            temp =  (sumArr[end] - sumArr[start]) / (end - start);
+        } else {
+            for ( let i = start+1 ; i + leftK - 1 <= end ; i++ ) {
+                temp = Math.max( temp, 
+                               helper( i, end, leftK-1 ) +  (sumArr[i] - sumArr[start] ) / (i - start)
+                               );
+            }
         }
         
-        let ret = 0 ;
-        for ( let i = beg + 1 ; i <= end+1-num ; i++ ) {
-            ret = Math.max( ret, 
-                           A.slice(beg, i).reduce( (acc, ele) => acc + ele, 0) / (i-beg) + 
-                           helper( i, end, num-1 ) );  
-        }
-        cache[str] = ret;
-        // console.log( str, "=>" , ret );
-        return ret;
+        cache[str] = temp;
+        // console.log(str, temp);
+        return temp;
     }
     
-    return helper( 0, A.length, K );
-    
+    return helper(0, nums.length, k);
     
 };
 
